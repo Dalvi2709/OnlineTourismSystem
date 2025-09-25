@@ -94,7 +94,7 @@
                     </div>
                     <a href="contact.aspx" class="nav-item nav-link">Contact</a>
                 </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+                <a href="Register.aspx" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
             </div>
         </nav>
 

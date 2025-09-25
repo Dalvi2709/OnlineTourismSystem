@@ -69,6 +69,17 @@
   <ItemGroup>
     <Content Include="404.aspx" />
     <Content Include="about.aspx" />
+    <Content Include="Admin\AddUsers.aspx" />
+    <Content Include="Admin\AddUsersLogic.aspx" />
+    <Content Include="Admin\Dashboard.aspx" />
+    <Content Include="Admin\EditUser.aspx" />
+    <Content Include="Admin\EditUserLogic.aspx" />
+    <Content Include="Admin\Logout.aspx" />
+    <Content Include="Admin\Packages.aspx" />
+    <Content Include="Admin\ToggleUsers.aspx" />
+    <Content Include="Admin\Users.aspx" />
+    <Content Include="Admin\ViewPackage.aspx" />
+    <Content Include="assets\tourist.jpeg" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="booking.aspx" />
@@ -120,8 +131,12 @@
     <Content Include="lib\wow\wow.js" />
     <Content Include="lib\wow\wow.min.js" />
     <Content Include="LICENSE.txt" />
+    <Content Include="Login.aspx" />
+    <Content Include="LoginLogic.aspx" />
     <Content Include="package.aspx" />
     <Content Include="READ-ME.txt" />
+    <Content Include="Register.aspx" />
+    <Content Include="RegisterLogic.aspx" />
     <Content Include="service.aspx" />
     <Content Include="team.aspx" />
     <Content Include="testimonial.aspx" />
@@ -129,14 +144,120 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AddUsers.aspx.cs">
+      <DependentUpon>AddUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddUsers.aspx.designer.cs">
+      <DependentUpon>AddUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AddUsersLogic.aspx.cs">
+      <DependentUpon>AddUsersLogic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddUsersLogic.aspx.designer.cs">
+      <DependentUpon>AddUsersLogic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\EditUserLogic.aspx.cs">
+      <DependentUpon>EditUserLogic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\EditUserLogic.aspx.designer.cs">
+      <DependentUpon>EditUserLogic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Packages.aspx.cs">
+      <DependentUpon>Packages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Packages.aspx.designer.cs">
+      <DependentUpon>Packages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ToggleUsers.aspx.cs">
+      <DependentUpon>ToggleUsers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ToggleUsers.aspx.designer.cs">
+      <DependentUpon>ToggleUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ViewPackage.aspx.cs">
+      <DependentUpon>ViewPackage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ViewPackage.aspx.designer.cs">
+      <DependentUpon>ViewPackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginLogic.aspx.cs">
+      <DependentUpon>LoginLogic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginLogic.aspx.designer.cs">
+      <DependentUpon>LoginLogic.aspx</DependentUpon>
+    </Compile>
     <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterLogic.aspx.cs">
+      <DependentUpon>RegisterLogic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterLogic.aspx.designer.cs">
+      <DependentUpon>RegisterLogic.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\owlcarousel\LICENSE" />
     <Content Include="lib\waypoints\links.php" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\TourismWebApplication.csproj.AssemblyReference.cache" />
+    <Content Include="Admin\Admin.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

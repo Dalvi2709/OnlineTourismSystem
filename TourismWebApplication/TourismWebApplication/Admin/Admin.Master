@@ -1,0 +1,111 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="TourismWebApplication.Admin.Admin" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="UTF-8" />
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: #86b817;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+            .sidebar h4 {
+                color: #fff;
+                margin-bottom: 20px;
+            }
+
+            .sidebar a {
+                color: #fff;
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                text-decoration: none;
+                margin-bottom: 5px;
+                border-radius: 5px;
+                transition: 0.2s;
+            }
+
+                .sidebar a i {
+                    margin-right: 10px;
+                }
+
+                .sidebar a:hover {
+                    background-color: #6c9e14;
+                }
+
+        /* Main content */
+        .main-content {
+            margin-left: 250px; /* Matches sidebar width */
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Navbar inside main content */
+        .navbar-custom {
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <%if (Session["UserEmail"] == null ||
+           Session["name"] == null ||
+           Session["Role"] == null ||
+           Session["phone"] == null || Session["Role"] == "Admin")
+        {
+            Response.Redirect("~/Login.aspx?msg=Unauthorize%20Access&type=error");
+        }%>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4>Admin Panel</h4>
+        <a href="Dashboard.aspx"><i class="bi bi-speedometer2"></i>Dashboard</a>
+        <a href="Users.aspx"><i class="bi bi-person"></i>Users</a>
+        <a href="Packages.aspx"><i class="bi bi-briefcase"></i>Packages</a>
+        <a href="Bookings.aspx"><i class="bi bi-calendar-event"></i>Bookings</a>
+        <a href="Payments.aspx"><i class="bi bi-credit-card"></i>Payments</a>
+        <a href="Reports.aspx"><i class="bi bi-bar-chart"></i>Reports</a>
+        <a href="Logout.aspx"><i class="bi bi-box-arrow-right"></i>logout</a>
+        <a href="Settings.aspx"><i class="bi bi-gear"></i>Settings</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
