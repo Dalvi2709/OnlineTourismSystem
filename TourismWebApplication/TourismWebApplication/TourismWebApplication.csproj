@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="404.aspx" />
     <Content Include="about.aspx" />
     <Content Include="Admin\AddUsers.aspx" />
     <Content Include="Admin\AddUsersLogic.aspx" />
@@ -139,7 +138,6 @@
     <Content Include="RegisterLogic.aspx" />
     <Content Include="service.aspx" />
     <Content Include="team.aspx" />
-    <Content Include="testimonial.aspx" />
     <Content Include="travel-agency-html-template.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -267,6 +265,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Customer\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
