@@ -79,9 +79,9 @@
 <body>
 
     <%if (Session["UserEmail"] == null ||
-           Session["name"] == null ||
-           Session["Role"] == null ||
-           Session["phone"] == null || Session["Role"] == "Admin")
+               Session["name"] == null ||
+               Session["Role"] == null ||
+               Session["phone"] == null || Session["Role"] == "Admin")
         {
             Response.Redirect("~/Login.aspx?msg=Unauthorize%20Access&type=error");
         }%>
@@ -95,13 +95,15 @@
         <a href="Bookings.aspx"><i class="bi bi-calendar-event"></i>Bookings</a>
         <a href="Payments.aspx"><i class="bi bi-credit-card"></i>Payments</a>
         <a href="Reports.aspx"><i class="bi bi-bar-chart"></i>Reports</a>
-        <a href="Logout.aspx"><i class="bi bi-box-arrow-right"></i>logout</a>
+        <a href="Staff.aspx"><i class="bi bi-people"></i>Staff</a>
+        <!-- New Staff Link -->
         <a href="Settings.aspx"><i class="bi bi-gear"></i>Settings</a>
+        <a href="Logout.aspx"><i class="bi bi-box-arrow-right"></i>Logout</a>
     </div>
 
     <!-- Main content -->
     <div class="main-content">
-        
+
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </div>
 
