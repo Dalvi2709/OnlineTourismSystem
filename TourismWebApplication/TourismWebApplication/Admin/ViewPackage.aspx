@@ -26,6 +26,7 @@
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     string title = "", price = "", location = "", description = "", audience = "", hotelName = "", hotelAddress = "", mapUrl = "", startDate = "", endDate = "", sourceDest = "", image = "";
+                    int availableSlots = 0;
                     DateTime endDt = DateTime.Now;
 
                     if (reader.Read())
@@ -43,6 +44,7 @@
                         endDate = endDt.ToString("dd-MMM-yyyy");
                         sourceDest = reader["SourceDestination"].ToString();
                         image = string.IsNullOrEmpty(reader["ImageUrl"].ToString()) ? "/assets/no-image.jpg" : reader["ImageUrl"].ToString();
+                        availableSlots = reader["AvailableSlots"] != DBNull.Value ? Convert.ToInt32(reader["AvailableSlots"]) : 0;
                     }
                     else
                     {
@@ -51,8 +53,6 @@
         <%
             }
             reader.Close();
-
-
         %>
 
         <div class="card shadow-lg mb-4">
@@ -63,15 +63,14 @@
                 <div class="col-md-7">
                     <div class="card-body">
                         <h2 class="card-title text-primary fw-bold mb-2"><i class="bi bi-box-seam me-2"></i><%= title %></h2>
-
                         <span class="badge <%= endDt < DateTime.Now ? "bg-danger" : "bg-success" %> mb-3">
                             <%= endDt < DateTime.Now ? "Expired" : "Active" %>
                         </span>
-
                         <div class="mb-2"><i class="bi bi-cash-stack text-success me-1"></i><strong>Price:</strong> ₹<%= price %></div>
                         <div class="mb-2"><i class="bi bi-geo-alt-fill text-danger me-1"></i><strong>Location:</strong> <%= location %></div>
                         <div class="mb-2"><i class="bi bi-calendar-event text-warning me-1"></i><strong>Start Date:</strong> <%= startDate %> &nbsp; | &nbsp; <strong>End Date:</strong> <%= endDate %></div>
                         <div class="mb-2"><i class="bi bi-people-fill text-info me-1"></i><strong>Audience:</strong> <%= audience %></div>
+                        <div class="mb-2"><i class="bi bi-box2-heart text-danger me-1"></i><strong>Available Slots:</strong> <span class="badge <%= availableSlots > 0 ? "bg-success" : "bg-danger" %>"><%= availableSlots %></span></div>
                         <div class="mb-2"><i class="bi bi-card-text text-secondary me-1"></i><strong>Description:</strong> <%= string.IsNullOrEmpty(description) ? "No description available." : description %></div>
                         <div class="mb-2"><i class="bi bi-house-door-fill text-primary me-1"></i><strong>Hotel:</strong> <%= hotelName %>, <%= hotelAddress %></div>
                         <div class="mb-2"><i class="bi bi-arrow-left-right text-secondary me-1"></i><strong>Source / Destination:</strong> <%= sourceDest %></div>
@@ -81,10 +80,9 @@
                                 { %>
                             <a href="<%= mapUrl %>" target="_blank" class="text-decoration-none">View on Google Maps</a>
                             <% }
-                                else
-                                { %> N/A <% } %>
+                            else
+                            { %> N/A <% } %>
                         </div>
-
                         <a href="Packages.aspx" class="btn btn-secondary mt-2"><i class="bi bi-arrow-left-circle me-1"></i>Back to Packages</a>
                     </div>
                 </div>
@@ -210,7 +208,6 @@
                 bookingReader.Close();
             %>
         </div>
-
         <%
                 }
             }%>

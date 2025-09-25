@@ -1,10 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Users.aspx.cs" Inherits="TourismWebApplication.Admin.Users" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Staff.aspx.cs" Inherits="TourismWebApplication.Admin.Staff" %>
 
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Configuration" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -22,35 +20,37 @@
             margin-right: 5px;
         }
 
+        /* Search bar style */
         .search-box {
-            max-width: 300px;
+            max-width: 350px;
         }
     </style>
 
-    <!-- Page HTML -->
     <div class="container-fluid mt-4">
-        <h3 class="mb-4"><i class="bi bi-people-fill me-2"></i>Manage Users</h3>
+        <h3 class="mb-4"><i class="bi bi-people-fill me-2"></i>Manage Staff</h3>
 
-        <div class="d-flex justify-content-between mb-3">
-            <a href="AddUsers.aspx" class="btn btn-success shadow-sm">
-                <i class="bi bi-person-plus-fill me-1"></i>Add New User
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="AddStaff.aspx" class="btn btn-success shadow-sm">
+                <i class="bi bi-person-plus-fill me-1"></i>Add New Staff
             </a>
 
-            <!-- JS Search Box -->
-            <input type="text" id="searchInput" class="form-control search-box" placeholder="Search users... (Name, Email, Phone)">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="form-control shadow-sm" placeholder="Search staff... (Name, Email, Phone)">
+            </div>
         </div>
 
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="scrollable-table">
-                    <table class="table table-modern table-striped table-bordered align-middle" id="usersTable">
+                    <table id="staffTable" class="table table-modern table-striped table-bordered align-middle">
                         <thead>
                             <tr>
-                                <th><i class="bi bi-hash"></i>User ID</th>
+                                <th><i class="bi bi-hash"></i>Staff ID</th>
                                 <th><i class="bi bi-person-fill"></i>Name</th>
+
+
                                 <th><i class="bi bi-envelope-fill"></i>Email</th>
                                 <th><i class="bi bi-telephone-fill"></i>Phone</th>
-                                <th><i class="bi bi-shield-lock-fill"></i>Password</th>
                                 <th><i class="bi bi-toggle-on"></i>Status</th>
                                 <th><i class="bi bi-gear-fill"></i>Actions</th>
                             </tr>
@@ -61,24 +61,27 @@
                                 using (SqlConnection conn = new SqlConnection(connStr))
                                 {
                                     conn.Open();
-                                    SqlCommand cmd = new SqlCommand("SELECT UserID, Name, Email, Phone, PasswordHash, IsActive FROM Users WHERE Role = 'Customer' ORDER BY UserID DESC", conn);
+                                    SqlCommand cmd = new SqlCommand("SELECT StaffID, Name, Email, Phone, IsActive FROM Staff ORDER BY StaffID ASC", conn);
                                     SqlDataReader reader = cmd.ExecuteReader();
                                     while (reader.Read())
                                     {
-                                        int userId = Convert.ToInt32(reader["UserID"]);
+                                        int staffId = Convert.ToInt32(reader["StaffID"]);
                                         string name = reader["Name"].ToString();
                                         string email = reader["Email"].ToString();
                                         string phone = reader["Phone"].ToString();
-                                        string password = reader["PasswordHash"].ToString();
                                         bool isActive = Convert.ToBoolean(reader["IsActive"]);
                             %>
                             <tr>
-                                <td><%= userId %></td>
+                                <td><%= staffId %></td>
                                 <td><%= name %></td>
                                 <td><%= email %></td>
                                 <td><%= phone %></td>
-                                <td><%= password %></td>
                                 <td>
+
+
+
+
+
                                     <% if (isActive) { %>
                                     <span class="badge bg-success"><i class="bi bi-check-circle"></i>Active</span>
                                     <% } else { %>
@@ -86,33 +89,50 @@
                                     <% } %>
                                 </td>
                                 <td>
-                                    <a href="EditUser.aspx?UserID=<%= userId %>"
-                                        class="btn btn-primary btn-sm action-btn">
+                                    <a href="EditStaff.aspx?StaffID=<%= staffId %>" class="btn btn-primary btn-sm action-btn">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-
                                     <% if (isActive) { %>
-                                    <a href="ToggleUsers.aspx?UserID=<%= userId %>&action=deactivate" class="btn btn-danger btn-sm action-btn">
+                                    <a href="ToggleStaff.aspx?StaffID=<%= staffId %>&action=deactivate" class="btn btn-danger btn-sm action-btn">
                                         <i class="bi bi-person-dash-fill"></i>
                                     </a>
                                     <% } else { %>
-                                    <a href="ToggleUsers.aspx?UserID=<%= userId %>&action=activate" class="btn btn-success btn-sm action-btn">
+                                    <a href="ToggleStaff.aspx?StaffID=<%= staffId %>&action=activate" class="btn btn-success btn-sm action-btn">
                                         <i class="bi bi-person-check-fill"></i>
                                     </a>
                                     <% } %>
                                 </td>
                             </tr>
                             <%
-                                    }
+                                    } 
                                     reader.Close();
                                 }
                             %>
                         </tbody>
                     </table>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Search Script -->
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("#staffTable tbody tr");
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
 
     <!-- Toast Alert -->
     <%
@@ -131,17 +151,4 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     <% } %>
-
-    <!-- JS Script for Search -->
-    <script>
-        document.getElementById("searchInput").addEventListener("keyup", function () {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll("#usersTable tbody tr");
-
-            rows.forEach(row => {
-                let text = row.innerText.toLowerCase();
-                row.style.display = text.includes(filter) ? "" : "none";
-            });
-        });
-    </script>
 </asp:Content>
