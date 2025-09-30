@@ -76,7 +76,7 @@
                         <i class="fa fa-user"></i><%: Session["name"] %>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="Profile.aspx">Profile Management</a></li>
+                        <li><a class="dropdown-item" href= "Profile.aspx">Profile Management</a></li>
                         <li><a class="dropdown-item" href="Logout.aspx">Logout</a></li>
                     </ul>
                 </div>
