@@ -42,31 +42,6 @@
     </div>
     <!-- Spinner End -->
 
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
@@ -77,40 +52,42 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="index.aspx" class="nav-item nav-link">Home</a>
-                    <a href="about.aspx" class="nav-item nav-link active">About</a>
-                    <a href="service.aspx" class="nav-item nav-link">Services</a>
-                    <a href="package.aspx" class="nav-item nav-link">Packages</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="destination.aspx" class="dropdown-item">Destination</a>
-                            <a href="booking.aspx" class="dropdown-item">Booking</a>
-                            <a href="team.aspx" class="dropdown-item">Travel Guides</a>
-                            <a href="testimonial.aspx" class="dropdown-item">Testimonial</a>
-                            <a href="404.aspx" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.aspx" class="nav-item nav-link">Contact</a>
-                </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
-            </div>
-        </nav>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+            <a href="index.aspx" class="nav-item nav-link active">Home</a>
+            <a href="about.aspx" class="nav-item nav-link">About</a>
+            <a href="service.aspx" class="nav-item nav-link">Services</a>
+            <a href="package.aspx" class="nav-item nav-link">Packages</a>
+            <a href="history.aspx" class="nav-item nav-link">History</a>
+            <a href="contact.aspx" class="nav-item nav-link">Contact</a>
+        </div>
+
+        <% if (Session["UserEmail"] == null)
+            { %>
+        <a href="Register.aspx" class="btn btn-primary py-2 px-4">Register</a>
+        <a href="Login.aspx" class="btn btn-primary py-2 px-4 mx-2">Login</a>
+        <% }
+            else
+            { %>
+        <div class="dropdown">
+            <a class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fa fa-user"></i><%: Session["name"] %>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href= "Profile.aspx">Profile Management</a></li>
+                <li><a class="dropdown-item" href="Logout.aspx">Logout</a></li>
+            </ul>
+        </div>
+        <% } %>
+    </div>
+</nav>
 
         <div class="container-fluid bg-primary py-5 mb-5 hero-header">
             <div class="container py-5">
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white animated slideInDown">About Us</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">About</li>
-                            </ol>
-                        </nav>
+                        <h4 class="text-white">makes travel planning smarter, easier, and more enjoyable.</h4>
                     </div>
                 </div>
             </div>
@@ -153,7 +130,7 @@
                             <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Service</p>
                         </div>
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
+                    
                 </div>
             </div>
         </div>
@@ -165,8 +142,8 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Travel Guide</h6>
-                <h1 class="mb-5">Meet Our Guide</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Travel Team</h6>
+                <h1 class="mb-5">Meet Our Team</h1>
             </div>
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
