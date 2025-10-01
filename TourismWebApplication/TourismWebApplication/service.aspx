@@ -1,3 +1,5 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="service.aspx.cs" Inherits="TourismWebApplication.services1" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
