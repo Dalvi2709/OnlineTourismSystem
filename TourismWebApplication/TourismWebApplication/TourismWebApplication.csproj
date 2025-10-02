@@ -68,17 +68,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="Admin\AddPackage.aspx" />
+    <Content Include="Admin\AddPackageLogic.aspx" />
     <Content Include="Admin\AddStaff.aspx" />
     <Content Include="Admin\AddStaffLogic.aspx" />
     <Content Include="Admin\AddUsers.aspx" />
     <Content Include="Admin\AddUsersLogic.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
     <Content Include="Admin\DeletePackage.aspx" />
-    <Content Include="Admin\EditPackage.aspx" />
     <Content Include="Admin\EditStaff.aspx" />
     <Content Include="Admin\EditStaffLogic.aspx" />
     <Content Include="Admin\EditUser.aspx" />
     <Content Include="Admin\EditUserLogic.aspx" />
+    <Content Include="Admin\GetStaffByRole.aspx" />
     <Content Include="Admin\Logout.aspx" />
     <Content Include="Admin\Packages.aspx" />
     <Content Include="Admin\Staff.aspx" />
@@ -152,6 +154,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AddPackage.aspx.cs">
+      <DependentUpon>AddPackage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddPackage.aspx.designer.cs">
+      <DependentUpon>AddPackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AddPackageLogic.aspx.cs">
+      <DependentUpon>AddPackageLogic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AddPackageLogic.aspx.designer.cs">
+      <DependentUpon>AddPackageLogic.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\AddStaff.aspx.cs">
       <DependentUpon>AddStaff.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -201,13 +217,6 @@
     <Compile Include="Admin\DeletePackage.aspx.designer.cs">
       <DependentUpon>DeletePackage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\EditPackage.aspx.cs">
-      <DependentUpon>EditPackage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\EditPackage.aspx.designer.cs">
-      <DependentUpon>EditPackage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Admin\EditStaff.aspx.cs">
       <DependentUpon>EditStaff.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -235,6 +244,13 @@
     </Compile>
     <Compile Include="Admin\EditUserLogic.aspx.designer.cs">
       <DependentUpon>EditUserLogic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\GetStaffByRole.aspx.cs">
+      <DependentUpon>GetStaffByRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\GetStaffByRole.aspx.designer.cs">
+      <DependentUpon>GetStaffByRole.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>

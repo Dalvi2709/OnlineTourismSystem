@@ -33,6 +33,13 @@
     </style>
 
     <div class="row g-4">
+        <h3 class="mb-4"> <i class="bi bi-box-seam-fill me-1"></i>Manage Packages</h3>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="AddPackage.aspx" class="btn btn-success shadow-sm">
+                <i class="bi bi-box-seam-fill me-1"></i>Add New Package
+            </a>
+        </div>
+
         <%
             string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connStr))
