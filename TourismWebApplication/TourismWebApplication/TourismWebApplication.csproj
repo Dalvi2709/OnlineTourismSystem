@@ -91,7 +91,7 @@
     <Content Include="contact.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
-    <Content Include="Customer\history.aspx" />
+    <Content Include="history.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="index.aspx" />
     <Content Include="Logout.aspx" />
@@ -291,11 +291,11 @@
     <Compile Include="Admin\ViewPackage.aspx.designer.cs">
       <DependentUpon>ViewPackage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Customer\history.aspx.cs">
+    <Compile Include="history.aspx.cs">
       <DependentUpon>history.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Customer\history.aspx.designer.cs">
+    <Compile Include="history.aspx.designer.cs">
       <DependentUpon>history.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile.aspx.cs">
