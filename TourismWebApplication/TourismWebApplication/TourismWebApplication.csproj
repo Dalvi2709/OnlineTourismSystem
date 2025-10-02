@@ -97,6 +97,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="history.aspx" />
+    <Content Include="PackageDetails.aspx" />
     <Content Include="Profile.aspx" />
     <Content Include="index.aspx" />
     <Content Include="Logout.aspx" />
@@ -302,6 +303,13 @@
     </Compile>
     <Compile Include="history.aspx.designer.cs">
       <DependentUpon>history.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PackageDetails.aspx.cs">
+      <DependentUpon>PackageDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PackageDetails.aspx.designer.cs">
+      <DependentUpon>PackageDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
