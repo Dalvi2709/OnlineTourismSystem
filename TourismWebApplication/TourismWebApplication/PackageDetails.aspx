@@ -1,11 +1,14 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="package.aspx.cs" Inherits="TourismWebApplication.packages" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PackageDetails.aspx.cs" Inherits="TourismWebApplication.PackageDetails" %>
+
+<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Configuration" %>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Packages_Page</title>
+    <title>Package Details</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -81,114 +84,158 @@
                 <% } %>
             </div>
         </nav>
+
         <div class="container-fluid bg-primary py-5 mb-5 hero-header">
             <div class="container py-5">
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white mb-3 animated slideInDown">Enjoy Your Vacation With Us</h1>
-                        <h3 class="display-3 text-white animated slideInDown">Packages</h3>
                         <p class="fs-4 text-light mb-4 animated fadeInUp">Discover amazing places, adventures, and memories waiting for you</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;">
+        <% 
+            string msg = Request.QueryString["msg"];
+            string type = Request.QueryString["type"];
+            string alertClass = "";
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                if (type == "success") alertClass = "alert-success";
+                else if (type == "error") alertClass = "alert-danger";
+                else if (type == "info") alertClass = "alert-info";
+                else alertClass = "alert-secondary";
+            }
+
+            if (!string.IsNullOrEmpty(msg))
+            {
+        %>
+        <div class="alert <%= alertClass %> alert-dismissible fade show" role="alert" style="min-width: 250px;">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+    </div>
+
+
     <!-- Navbar & Hero End -->
 
-    <!-- Package Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Packages</h6>
-                <h1 class="mb-5">Awesome Packages</h1>
-            </div>
+    <!-- PackageDetails Start -->
 
-            <div class="row g-4 justify-content-center">
-                <asp:Repeater ID="rptPackages" runat="server">
-                    <ItemTemplate>
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="package-item">
-                                <div class="overflow-hidden">
-                                    <img src="<%# Eval("ImageUrl") %>" class="card-img-top" alt="<%# Eval("Title") %>" style="height: 220px; width: 100%; object-fit: cover;">
-                                </div>
-                                <div class="d-flex border-bottom">
-                                    <small class="flex-fill text-center border-end py-2">
-                                        <i class="fa fa-map-marker-alt text-primary me-2"></i>
-                                        <%# Eval("Location") %>
-                                    </small>
-                                    <small class="flex-fill text-center border-end py-2">
-                                        <i class="fa fa-calendar-alt text-primary me-2"></i>
-                                        <%# Eval("DurationDays") %> Days
-                                    </small>
-                                    <small class="flex-fill text-center py-2">
-                                        <i class="fa fa-user text-primary me-2"></i>
-                                        Available Slots: <%# Eval("AvailableSlots") %>
-                                    </small>
-                                </div>
-                                <div class="text-center p-4">
-                                    <h2><%# Eval("Title") %></h2>
-                                    <h3 class="mb-0">₹ <%# Eval("Price") %></h3>
-                                    <p><%# Eval("Description") %></p>
-                                    <div class="d-flex justify-content-center mb-2">
-                                        <a href='PackageDetails.aspx?id=<%# Eval("PackageID") %>' class="btn btn-sm btn-primary px-3 border-end">Read More</a>
-                                        <a href='BookPackage.aspx?id=<%# Eval("PackageID") %>' class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
-                                    </div>
-                                </div>
+    <div class="container mt-5">
+        <asp:Panel ID="pnlPackage" runat="server" Visible="false">
+            <div class="card shadow-lg mb-4">
+                <div class="row g-0">
+                    <!-- Package Image -->
+                    <div class="col-md-5">
+                        <asp:Image ID="imgPackage" runat="server" CssClass="img-fluid rounded-start"
+                            AlternateText="Package Image" Style="height: 100%; object-fit: cover;" />
+                    </div>
+
+                    <!-- Package Details -->
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h2 class="card-title text-primary fw-bold mb-2">
+                                <i class="bi bi-box-seam me-2"></i>
+                                <asp:Label ID="lblTitle" runat="server" />
+                            </h2>
+                            <span id="lblStatus" runat="server"></span>
+
+                            <div class="mb-2"><i class="bi bi-cash-stack text-success me-1"></i><strong>Price:</strong> ₹<asp:Label ID="lblPrice" runat="server" /></div>
+                            <div class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger me-1"></i><strong>Location:</strong>
+                                <asp:Label ID="lblLocation" runat="server" />
                             </div>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
-        </div>
-    </div>
-    <!-- Package End -->
+                            <div class="mb-2">
+                                <i class="bi bi-calendar-event text-warning me-1"></i><strong>Start Date:</strong>
+                                <asp:Label ID="lblStartDate" runat="server" />
+                                &nbsp; | &nbsp; <strong>End Date:</strong>
+                                <asp:Label ID="lblEndDate" runat="server" />
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-people-fill text-info me-1"></i><strong>Audience:</strong>
+                                <asp:Label ID="lblAudience" runat="server" />
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-box2-heart text-danger me-1"></i><strong>Available Slots:</strong>
+                                <asp:Label ID="lblSlots" runat="server" />
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-card-text text-secondary me-1"></i><strong>Description:</strong>
+                                <asp:Label ID="lblDescription" runat="server" />
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-house-door-fill text-primary me-1"></i><strong>Hotel:</strong>
+                                <asp:Label ID="lblHotel" runat="server" />
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-arrow-left-right text-secondary me-1"></i><strong>Source / Destination:</strong>
+                                <asp:Label ID="lblSourceDest" runat="server" />
+                            </div>
+                            <div class="mb-3">
+                                <i class="bi bi-map-fill text-danger me-1"></i><strong>Map:</strong>
+                                <asp:HyperLink ID="lnkMap" runat="server" CssClass="text-decoration-none" Target="_blank" />
+                            </div>
 
-    <!-- Process Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Process</h6>
-                <h1 class="mb-5">3 Easy Steps</h1>
-            </div>
-            <div class="row gy-5 gx-4 justify-content-center">
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-globe fa-3x text-white"></i>
+                            <a href="package.aspx" class="btn btn-secondary mt-2"><i class="bi bi-arrow-left-circle me-1"></i>Back to Packages</a>
                         </div>
-                        <h5 class="mt-4">Choose A Destination</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-dollar-sign fa-3x text-white"></i>
-                        </div>
-                        <h5 class="mt-4">Pay Online</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="position-relative border border-primary pt-5 pb-4 px-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
-                            <i class="fa fa-plane fa-3x text-white"></i>
-                        </div>
-                        <h5 class="mt-4">Fly Today</h5>
-                        <hr class="w-25 mx-auto bg-primary mb-1">
-                        <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Tempor erat elitr rebum clita dolor diam ipsum sit diam amet diam eos erat ipsum et lorem et sit sed stet lorem sit</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Process Start -->
+        </asp:Panel>
 
+        <asp:Label ID="lblMessage" runat="server" CssClass="alert alert-danger" Visible="false"></asp:Label>
+    </div>
+
+        <!-- Package Staff Details -->
+    <div class="card shadow-lg p-4 mb-4">
+        <h4 class="mb-3 text-primary">
+            <i class="bi bi-people-fill me-2"></i>Assigned Staff
+        </h4>
+
+        <asp:Repeater ID="rptStaff" runat="server">
+            <HeaderTemplate>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Staff Role</th>
+                                <th>Assigned Role</th>
+                                <th>Assigned Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            </HeaderTemplate>
+
+            <ItemTemplate>
+                <tr>
+                    <td><i class="bi bi-person-circle me-1"></i><%# Eval("Name") %></td>
+                    <td><%# Eval("Email") %></td>
+                    <td><%# Eval("Phone") %></td>
+                    <td><span class="badge bg-info text-dark"><%# Eval("Role") %></span></td>
+                    <td><span class="badge bg-success"><%# Eval("AssignedRole") %></span></td>
+                    <td><%# Eval("AssignedDate", "{0:dd-MMM-yyyy}") %></td>
+                </tr>
+            </ItemTemplate>
+
+            <FooterTemplate>
+                </tbody>
+                </table>
+            </div>
+            </FooterTemplate>
+        </asp:Repeater>
+
+        <asp:Label ID="lblNoStaff" runat="server" CssClass="text-muted" Visible="false" />
+    </div>
+
+    <!-- PackageDetails End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -288,6 +335,20 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- alert will be Auto-dismiss after a few seconds -->
+    <script>
+        setTimeout(function () {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('hide');
+            }
+        }, 5000); // 5000ms = 5 seconds
+    </script>
+
 </body>
 
 </html>
+
