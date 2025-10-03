@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="img\about_us_page.jpg" />
     <Content Include="Admin\AddPackage.aspx" />
     <Content Include="Admin\AddPackageLogic.aspx" />
     <Content Include="Admin\AddStaff.aspx" />
@@ -100,14 +101,18 @@
     <Content Include="assets\footer5.jpg" />
     <Content Include="assets\footer6.jpg" />
     <Content Include="assets\hiking.jpg" />
+    <Content Include="assets\image1.jpg" />
     <Content Include="assets\museum.jpg" />
+    <Content Include="assets\museumslider.jpg" />
     <Content Include="assets\temple.jpg" />
+    <Content Include="assets\templeslider.jpg" />
     <Content Include="assets\tourist.jpeg" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="booking.aspx" />
     <Content Include="BookPackage.aspx" />
     <Content Include="contact.aspx" />
+    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="history.aspx" />
@@ -167,7 +172,6 @@
     <Content Include="RegisterLogic.aspx" />
     <Content Include="service.aspx" />
     <Content Include="team.aspx" />
-    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

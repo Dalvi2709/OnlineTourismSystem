@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Tourist - Travel Agency HTML Template</title>
+    <title>Service Page</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -33,23 +33,25 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-   <style>
-  .trip-img {
-    border-radius: 20px;       /* Curved edges */
-    height: 220px;             /* Fixed height for uniform display */
-    width: 100%;               /* Make all images fit column width */
-    object-fit: cover;         /* Crop image neatly without stretching */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .trip-img:hover {
-    transform: scale(1.05);    /* Zoom on hover */
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
-  }
-  .trip-card h5 {
-    font-weight: 600;
-    margin-top: 12px;
-  }
-</style>
+    <style>
+        .trip-img {
+            border-radius: 20px; /* Curved edges */
+            height: 220px; /* Fixed height for uniform display */
+            width: 100%; /* Make all images fit column width */
+            object-fit: cover; /* Crop image neatly without stretching */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .trip-img:hover {
+                transform: scale(1.05); /* Zoom on hover */
+                box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+            }
+
+        .trip-card h5 {
+            font-weight: 600;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -62,59 +64,45 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-  <!---  <div class="container-fluid bg-dark px-5 d-none d-lg-block">
-        <div class="row gx-0">
-            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                    <small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>+012 345 6789</small>
-                    <small class="text-light"><i class="fa fa-envelope-open me-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                    <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>--->
-    <!-- Topbar End -->
 
 
     <!-- Navbar & Hero Start -->
-   <!-- <div class="container-fluid position-relative p-0">
+
+    <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="" class="navbar-brand p-0">
+            <a href="index.aspx" class="navbar-brand p-0">
                 <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1>
-                <!-- <img src="img/logo.png" alt="Logo"> 
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="index.aspx" class="nav-item nav-link">Home</a>
+                    <a href="index.aspx" class="nav-item nav-link ">Home</a>
                     <a href="about.aspx" class="nav-item nav-link">About</a>
                     <a href="service.aspx" class="nav-item nav-link active">Services</a>
                     <a href="package.aspx" class="nav-item nav-link">Packages</a>
-                   <!-- <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="destination.aspx" class="dropdown-item">Destination</a>
-                            <a href="booking.aspx" class="dropdown-item">Booking</a>
-                            <a href="team.aspx" class="dropdown-item">Travel Guides</a>
-                            <a href="testimonial.aspx" class="dropdown-item">Testimonial</a>
-                            <a href="404.aspx" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
+                    <a href="history.aspx" class="nav-item nav-link">History</a>
                     <a href="contact.aspx" class="nav-item nav-link">Contact</a>
                 </div>
-                <a href="" class="btn btn-primary rounded-pill py-2 px-4">Register</a>
+
+                <% if (Session["UserEmail"] == null)
+                    { %>
+                <a href="Register.aspx" class="btn btn-primary py-2 px-4">Register</a>
+                <a href="Login.aspx" class="btn btn-primary py-2 px-4 mx-2">Login</a>
+                <% }
+                    else
+                    { %>
+                <div class="dropdown">
+                    <a class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-user"></i><%: Session["name"] %>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="Profile.aspx">Profile Management</a></li>
+                        <li><a class="dropdown-item" href="Logout.aspx">Logout</a></li>
+                    </ul>
+                </div>
+                <% } %>
             </div>
         </nav>
 
@@ -122,94 +110,37 @@
             <div class="container py-5">
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                        <h1 class="display-3 text-white animated slideInDown">Services</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">Services</li>
-                            </ol>
-                        </nav> 
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Services</h1>
+                        <h4 class="text-white">makes travel planning smarter, easier, and more enjoyable.</h4>
                     </div>
                 </div>
             </div>
         </div>
-    </div>--->
+    </div>
 
-    <!--start-->
-     <div class="container-fluid position-relative p-0">
-     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-         <a href="index.aspx" class="navbar-brand p-0">
-             <h1 class="text-primary m-0"><i class="fa fa-map-marker-alt me-3"></i>Tourist</h1>
-         </a>
-         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-             <span class="fa fa-bars"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarCollapse">
-             <div class="navbar-nav ms-auto py-0">
-                 <a href="index.aspx" class="nav-item nav-link active">Home</a>
-                 <a href="about.aspx" class="nav-item nav-link">About</a>
-                 <a href="service.aspx" class="nav-item nav-link">Services</a>
-                 <a href="package.aspx" class="nav-item nav-link">Packages</a>
-                 <a href="history.aspx" class="nav-item nav-link">History</a>
-                 <a href="contact.aspx" class="nav-item nav-link">Contact</a>
-             </div>
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;">
+        <% 
+            string msg = Request.QueryString["msg"];
+            string type = Request.QueryString["type"];
+            string alertClass = "";
 
-             <% if (Session["UserEmail"] == null)
-                 { %>
-             <a href="Register.aspx" class="btn btn-primary py-2 px-4">Register</a>
-             <a href="Login.aspx" class="btn btn-primary py-2 px-4 mx-2">Login</a>
-             <% }
-                 else
-                 { %>
-             <div class="dropdown">
-                 <a class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                     <i class="fa fa-user"></i><%: Session["name"] %>
-                 </a>
-                 <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href= "Profile.aspx">Profile Management</a></li>
-                     <li><a class="dropdown-item" href="Logout.aspx">Logout</a></li>
-                 </ul>
-             </div>
-             <% } %>
-         </div>
-     </nav>
+            if (!string.IsNullOrEmpty(type))
+            {
+                if (type == "success") alertClass = "alert-success";
+                else if (type == "error") alertClass = "alert-danger";
+                else if (type == "info") alertClass = "alert-info";
+                else alertClass = "alert-secondary";
+            }
 
-     <div class="container-fluid bg-primary py-5 mb-5 hero-header">
-         <div class="container py-5">
-             <div class="row justify-content-center py-5">
-                 <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                     <h1 class="display-3 text-white mb-3 animated slideInDown">Services</h1>
-                    
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
-
- <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;">
-     <% 
-         string msg = Request.QueryString["msg"];
-         string type = Request.QueryString["type"];
-         string alertClass = "";
-
-         if (!string.IsNullOrEmpty(type))
-         {
-             if (type == "success") alertClass = "alert-success";
-             else if (type == "error") alertClass = "alert-danger";
-             else if (type == "info") alertClass = "alert-info";
-             else alertClass = "alert-secondary";
-         }
-
-         if (!string.IsNullOrEmpty(msg))
-         {
-     %>
-     <div class="alert <%= alertClass %> alert-dismissible fade show" role="alert" style="min-width: 250px;">
-         <%= msg %>
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-     </div>
-     <% } %>
- </div>
+            if (!string.IsNullOrEmpty(msg))
+            {
+        %>
+        <div class="alert <%= alertClass %> alert-dismissible fade show" role="alert" style="min-width: 250px;">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+    </div>
 
 
     <!-- Navbar & Hero End -->
@@ -274,7 +205,7 @@
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
-                           <i class="fa fa-3x fa-user-friends text-primary mb-4"></i>
+                            <i class="fa fa-3x fa-user-friends text-primary mb-4"></i>
 
                             <h5>Group & Corporate Tours</h5>
                             <p>Special arrangements for families,corporates & school trips.</p>
@@ -284,7 +215,7 @@
                 <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item rounded pt-3">
                         <div class="p-4">
-                           <i class="fa fa-3x fa-gem text-primary mb-4"></i>
+                            <i class="fa fa-3x fa-gem text-primary mb-4"></i>
 
                             <h5>Luxury & Comfort Travel</h5>
                             <p>Premium stays,private cabs & comfortable journeys for a stress-free holiday.</p>
@@ -310,97 +241,65 @@
     <!-- Testimonial Start -->
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container">
-           <!-- <div class="text-center">
-                <h6 class="section-title bg-white text-center text-primary px-3">Testimonial</h6>
-                <h1 class="mb-5">Our Clients Say!!!</h1>
-            </div>-->
-           <!--- <div class="owl-carousel testimonial-carousel position-relative">
-                <div class="testimonial-item bg-white text-center border p-4">
-                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-1.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">John Doe</h5>
-                    <p>New York, USA</p>
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                </div>
-                <div class="testimonial-item bg-white text-center border p-4">
-                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-2.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">John Doe</h5>
-                    <p>New York, USA</p>
-                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                </div>
-                <div class="testimonial-item bg-white text-center border p-4">
-                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-3.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">John Doe</h5>
-                    <p>New York, USA</p>
-                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                </div>
-                <div class="testimonial-item bg-white text-center border p-4">
-                    <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="img/testimonial-4.jpg" style="width: 80px; height: 80px;">
-                    <h5 class="mb-0">John Doe</h5>
-                    <p>New York, USA</p>
-                    <p class="mt-2 mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                </div>
-            </div>--->
-            <!--trip section-->
+
             <div class="container-xxl py-5">
-  <div class="container text-center">
-      <div class="text-center">
-                <h6 class="section-title bg-white text-center text-primary px-3">Plan your Trip</h6>
-                <h1 class="mb-5">Let Us Plan You a Perfect Holiday!!!</h1>
-            </div>-
-    <!--<h6 class="section-title text-primary px-3" style="font-family: 'Cedarville Cursive', cursive; font-size: 28px;">
-      okay
-    </h6>
-    <h1 class="mb-5 fw-bold">Let Us Plan You a Perfect Holiday</h1>-->
+                <div class="container text-center">
+                    <div class="text-center">
+                        <h6 class="section-title bg-white text-center text-primary px-3">Plan your Trip</h6>
+                        <h1 class="mb-5">Let Us Plan You a Perfect Holiday!!!</h1>
+                    </div>
+                    -
+
 
     <div class="row g-4 justify-content-center">
-      
-      <!-- City -->
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="trip-card">
-          <img src="./assets/city.jpg" class="img-fluid trip-img" alt="City Tours">
-          <h5 class="mt-3">City Tours</h5>
-        </div>
-      </div>
 
-      <!-- Museum -->
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="trip-card">
-          <img src="./assets/museum.jpg" class="img-fluid trip-img" alt="Museums">
-          <h5 class="mt-3">Museums</h5>
+        <!-- City -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="trip-card">
+                <img src="./assets/city.jpg" class="img-fluid trip-img" alt="City Tours">
+                <h5 class="mt-3">City Tours</h5>
+            </div>
         </div>
-      </div>
 
-      <!-- Beaches -->
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="trip-card">
-          <img src="./assets/beaches.jpg" class="img-fluid trip-img" alt="Beaches">
-          <h5 class="mt-3">Beaches</h5>
+        <!-- Museum -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="trip-card">
+                <img src="./assets/museum.jpg" class="img-fluid trip-img" alt="Museums">
+                <h5 class="mt-3">Museums</h5>
+            </div>
         </div>
-      </div>
 
-      <!-- Hiking -->
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="trip-card">
-          <img src="./assets/hiking.jpg" class="img-fluid trip-img" alt="Hiking">
-          <h5 class="mt-3">Hiking</h5>
+        <!-- Beaches -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="trip-card">
+                <img src="./assets/beaches.jpg" class="img-fluid trip-img" alt="Beaches">
+                <h5 class="mt-3">Beaches</h5>
+            </div>
         </div>
-      </div>
 
-      <!-- Temples -->
-      <div class="col-lg-2 col-md-4 col-sm-6">
-        <div class="trip-card">
-          <img src="./assets/temple.jpg" class="img-fluid trip-img" alt="Temples">
-          <h5 class="mt-3">Temples</h5>
+        <!-- Hiking -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="trip-card">
+                <img src="./assets/hiking.jpg" class="img-fluid trip-img" alt="Hiking">
+                <h5 class="mt-3">Hiking</h5>
+            </div>
         </div>
-      </div>
+
+        <!-- Temples -->
+        <div class="col-lg-2 col-md-4 col-sm-6">
+            <div class="trip-card">
+                <img src="./assets/temple.jpg" class="img-fluid trip-img" alt="Temples">
+                <h5 class="mt-3">Temples</h5>
+            </div>
+        </div>
 
     </div>
-  </div>
-</div><!---trip section over-->
+                </div>
+            </div>
+            <!---trip section over-->
         </div>
     </div>
     <!-- Testimonial End -->
-        
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -408,17 +307,15 @@
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Company</h4>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Privacy Policy</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">FAQs & Help</a>
+                    <a class="btn btn-link" href="about.aspx">About Us</a>
+                    <a class="btn btn-link" href="contact.aspx">Contact Us</a>
+
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Contact</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ShivajiNagar,Pune,Maharashtra</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 9191919191</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>ikagailife86@gmail.com</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -449,57 +346,30 @@
                         </div>
                     </div>
                 </div>
-               <!-- <div class="col-lg-3 col-md-6">
-                    <h4 class="text-white mb-3">Newsletter</h4>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
-                </div>--->
+
             </div>
         </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
 
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        <!--Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>-->
-                    </div>
-                    <!--<div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="">Home</a>
-                            <a href="">Cookies</a>
-                            <a href="">Help</a>
-                            <a href="">FQAs</a>
-                        </div>
-                    </div>-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+        <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
 </body>
 
 </html>
