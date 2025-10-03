@@ -103,9 +103,9 @@
                     <p class="text-muted small"><%= string.IsNullOrEmpty(desc) ? "No description available." : (desc.Length > 80 ? desc.Substring(0, 80) + "..." : desc) %></p>
 
                     <div class="d-flex justify-content-center gap-2 flex-wrap">
-                        <a href="EditPackage.aspx?PackageID=<%= pkgId %>" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                       <!-- <a href="EditPackage.aspx?PackageID=<%= pkgId %>" class="btn btn-sm btn-outline-primary rounded-pill px-3">
                             <i class="bi bi-pencil me-1"></i>Edit
-                        </a>
+                        </a> -->
                         <a href="DeletePackage.aspx?PackageID=<%= pkgId %>"
                             onclick="return confirm('Are you sure you want to delete this package?');"
                             class="btn btn-sm btn-outline-danger rounded-pill px-3">
