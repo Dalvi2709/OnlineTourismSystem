@@ -92,7 +92,7 @@
         <a href="Dashboard.aspx"><i class="bi bi-speedometer2"></i>Dashboard</a>
         <a href="Users.aspx"><i class="bi bi-person"></i>Users</a>
         <a href="Packages.aspx"><i class="bi bi-briefcase"></i>Packages</a>
-        <a href="Bookings.aspx"><i class="bi bi-calendar-event"></i>Bookings</a>
+        <a href="Booking.aspx"><i class="bi bi-calendar-event"></i>Bookings</a>
         <a href="Payments.aspx"><i class="bi bi-credit-card"></i>Payments</a>
         <a href="Reports.aspx"><i class="bi bi-bar-chart"></i>Reports</a>
         <a href="Staff.aspx"><i class="bi bi-people"></i>Staff</a>
