@@ -25,6 +25,7 @@
             if (reader.HasRows)
             {
                 reader.Read();
+                Session["UserId"] = reader["UserID"];
 
                 Session["UserEmail"] = reader["Email"].ToString();
                 Session["name"] = reader["Name"].ToString();

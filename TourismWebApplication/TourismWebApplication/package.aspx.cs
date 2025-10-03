@@ -28,7 +28,8 @@ namespace TourismWebApplication
                 string query = @"SELECT PackageID, ImageUrl, Location,
                                  DATEDIFF(DAY, StartDate, EndDate) AS DurationDays,Title,
                                  Price, Description, AvailableSlots
-                                 FROM Packages";
+                                 FROM Packages
+WHERE StartDate > GETDATE();";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
