@@ -36,10 +36,14 @@ namespace TourismWebApplication
             {
                 // TOP 3 based on Price (highest first)
                 string query = @"SELECT TOP 3 PackageID, ImageUrl, Location,
-                                 DATEDIFF(DAY, StartDate, EndDate) AS DurationDays, Title,
-                                 Price, Description, AvailableSlots
-                                 FROM Packages
-                                 ORDER BY Price DESC";   // Or ORDER BY StartDate DESC for latest
+                 DATEDIFF(DAY, StartDate, EndDate) AS DurationDays, Title,
+                 Price, Description, AvailableSlots
+                 FROM Packages
+                 WHERE StartDate > GETDATE()
+                 ORDER BY Price DESC";
+
+
+                // Or ORDER BY StartDate DESC for latest
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();

@@ -21,7 +21,7 @@
             for (var i = 2; i <= seats; i++) {
                 container.innerHTML += `
                     <div class="border p-3 mb-3">
-                        <h5>Traveler ${i-1}</h5>
+                        <h5>Traveler ${i - 1}</h5>
                         <div class="mb-2">
                             <label class="form-label">Name</label>
                             <input type="text" class="form-control" id="TravelerName_${i}" name="TravelerName_${i}" required />
@@ -136,7 +136,7 @@
             {
                 try
                 {
- 
+
                     string insertQuery = @"INSERT INTO Bookings(UserID, PackageID, TravelDate, SeatBooked, Status, PaymentStatus)
                                                    VALUES(@UserID, @PackageID, @TravelDate, @SeatBooked, 'Pending', 'Unpaid');
                                                    SELECT SCOPE_IDENTITY();";
@@ -180,6 +180,9 @@
             ✅ Booking Successful for <strong><%= packageTitle %></strong>! You booked <%= seatBooked %> seat(s).
                                 <a href="history.aspx">View My Bookings</a>
         </div>
+        <div class="d-grid mt-2">
+            <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
+        </div>
         <%
             }
             catch (SqlException ex)
@@ -214,14 +217,14 @@
                 <small class="text-muted">Available Seats: <%= availableSlots %></small>
             </div>
 
-         
+
             <div id="travelerContainer"></div>
 
             <button type="submit" class="btn btn-primary w-100">Book Now</button>
         </form>
 
         <script>
-            showTravelerFields(); 
+            showTravelerFields();
         </script>
 
         <%
