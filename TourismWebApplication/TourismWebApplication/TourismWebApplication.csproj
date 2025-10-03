@@ -90,6 +90,12 @@
     <Content Include="Admin\ViewPackage.aspx" />
     <Content Include="assets\beaches.jpg" />
     <Content Include="assets\city.jpg" />
+    <Content Include="assets\footer1.jpg" />
+    <Content Include="assets\footer2.jpg" />
+    <Content Include="assets\footer3.jpg" />
+    <Content Include="assets\footer4.jpg" />
+    <Content Include="assets\footer5.jpg" />
+    <Content Include="assets\footer6.jpg" />
     <Content Include="assets\hiking.jpg" />
     <Content Include="assets\museum.jpg" />
     <Content Include="assets\temple.jpg" />
