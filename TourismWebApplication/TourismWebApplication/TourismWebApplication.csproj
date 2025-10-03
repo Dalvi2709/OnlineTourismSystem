@@ -159,7 +159,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
+
     <Compile Include="Admin\AddPackage.aspx.cs">
       <DependentUpon>AddPackage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -173,14 +173,14 @@
     </Compile>
     <Compile Include="Admin\AddPackageLogic.aspx.designer.cs">
       <DependentUpon>AddPackageLogic.aspx</DependentUpon>
-=======
+</Compile>
     <Compile Include="about.aspx.cs">
       <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
->>>>>>> dd20407a8811f6808b377dda90dbbcc37a339627
+
     </Compile>
     <Compile Include="Admin\AddStaff.aspx.cs">
       <DependentUpon>AddStaff.aspx</DependentUpon>
