@@ -88,6 +88,12 @@
     <Content Include="Admin\ViewPackage.aspx" />
     <Content Include="assets\beaches.jpg" />
     <Content Include="assets\city.jpg" />
+    <Content Include="assets\footer1.jpg" />
+    <Content Include="assets\footer2.jpg" />
+    <Content Include="assets\footer3.jpg" />
+    <Content Include="assets\footer4.jpg" />
+    <Content Include="assets\footer5.jpg" />
+    <Content Include="assets\footer6.jpg" />
     <Content Include="assets\hiking.jpg" />
     <Content Include="assets\museum.jpg" />
     <Content Include="assets\temple.jpg" />
@@ -159,7 +165,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Admin\AddPackage.aspx.cs">
       <DependentUpon>AddPackage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -173,14 +178,13 @@
     </Compile>
     <Compile Include="Admin\AddPackageLogic.aspx.designer.cs">
       <DependentUpon>AddPackageLogic.aspx</DependentUpon>
-</Compile>
+    </Compile>
     <Compile Include="about.aspx.cs">
       <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
-
     </Compile>
     <Compile Include="Admin\AddStaff.aspx.cs">
       <DependentUpon>AddStaff.aspx</DependentUpon>
