@@ -98,8 +98,11 @@
     <Content Include="assets\footer5.jpg" />
     <Content Include="assets\footer6.jpg" />
     <Content Include="assets\hiking.jpg" />
+    <Content Include="assets\image1.jpg" />
     <Content Include="assets\museum.jpg" />
+    <Content Include="assets\museumslider.jpg" />
     <Content Include="assets\temple.jpg" />
+    <Content Include="assets\templeslider.jpg" />
     <Content Include="assets\tourist.jpeg" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
