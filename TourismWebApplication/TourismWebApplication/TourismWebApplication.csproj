@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="img\about_us_page.jpg" />
     <Content Include="Admin\AddPackage.aspx" />
     <Content Include="Admin\AddPackageLogic.aspx" />
     <Content Include="Admin\AddStaff.aspx" />
@@ -104,6 +105,7 @@
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="booking.aspx" />
     <Content Include="contact.aspx" />
+    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="history.aspx" />
@@ -163,7 +165,6 @@
     <Content Include="RegisterLogic.aspx" />
     <Content Include="service.aspx" />
     <Content Include="team.aspx" />
-    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
