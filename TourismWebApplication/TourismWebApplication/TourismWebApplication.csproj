@@ -89,8 +89,11 @@
     <Content Include="assets\beaches.jpg" />
     <Content Include="assets\city.jpg" />
     <Content Include="assets\hiking.jpg" />
+    <Content Include="assets\image1.jpg" />
     <Content Include="assets\museum.jpg" />
+    <Content Include="assets\museumslider.jpg" />
     <Content Include="assets\temple.jpg" />
+    <Content Include="assets\templeslider.jpg" />
     <Content Include="assets\tourist.jpeg" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
@@ -159,7 +162,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Admin\AddPackage.aspx.cs">
       <DependentUpon>AddPackage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -173,14 +175,13 @@
     </Compile>
     <Compile Include="Admin\AddPackageLogic.aspx.designer.cs">
       <DependentUpon>AddPackageLogic.aspx</DependentUpon>
-</Compile>
+    </Compile>
     <Compile Include="about.aspx.cs">
       <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
-
     </Compile>
     <Compile Include="Admin\AddStaff.aspx.cs">
       <DependentUpon>AddStaff.aspx</DependentUpon>
