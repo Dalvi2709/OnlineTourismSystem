@@ -84,6 +84,9 @@
                 <div class="d-grid">
                     <button type="submit" class="btn btn-custom">Register</button>
                 </div>
+                <div class="d-grid mt-2">
+                    <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
+                </div>
             </form>
 
             <div class="text-center mt-4">

@@ -67,16 +67,19 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control" required />
                     <span class="error" id="passwordError">Password is required</span>
-                    <a href="ForgotPassword.aspx" class="forgot-link">Forgot Password?</a>
+                    <!--   <a href="ForgotPassword.aspx" class="forgot-link">Forgot Password?</a> -->
                 </div>
-
+                <!--
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="remember" name="remember" />
                     <label class="form-check-label" for="remember">Remember Me</label>
                 </div>
-
+                      -->
                 <div class="d-grid">
                     <button type="submit" class="btn btn-custom">Login</button>
+                </div>
+                <div class="d-grid mt-2">
+                    <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
                 </div>
             </form>
 
