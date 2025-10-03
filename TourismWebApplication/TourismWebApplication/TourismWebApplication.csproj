@@ -72,6 +72,8 @@
     <Content Include="Admin\AddStaffLogic.aspx" />
     <Content Include="Admin\AddUsers.aspx" />
     <Content Include="Admin\AddUsersLogic.aspx" />
+    <Content Include="Admin\Booking.aspx" />
+    <Content Include="Admin\BookingDetail.aspx" />
     <Content Include="Admin\Dashboard.aspx" />
     <Content Include="Admin\DeletePackage.aspx" />
     <Content Include="Admin\EditStaff.aspx" />
@@ -159,7 +161,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="Admin\AddPackage.aspx.cs">
       <DependentUpon>AddPackage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -173,14 +174,13 @@
     </Compile>
     <Compile Include="Admin\AddPackageLogic.aspx.designer.cs">
       <DependentUpon>AddPackageLogic.aspx</DependentUpon>
-</Compile>
+    </Compile>
     <Compile Include="about.aspx.cs">
       <DependentUpon>about.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="about.aspx.designer.cs">
       <DependentUpon>about.aspx</DependentUpon>
-
     </Compile>
     <Compile Include="Admin\AddStaff.aspx.cs">
       <DependentUpon>AddStaff.aspx</DependentUpon>
@@ -216,6 +216,20 @@
     </Compile>
     <Compile Include="Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Booking.aspx.cs">
+      <DependentUpon>Booking.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Booking.aspx.designer.cs">
+      <DependentUpon>Booking.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BookingDetail.aspx.cs">
+      <DependentUpon>BookingDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\BookingDetail.aspx.designer.cs">
+      <DependentUpon>BookingDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
