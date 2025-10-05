@@ -47,6 +47,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -66,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="img\about_us_page.jpg" />
     <Content Include="Admin\AddPackage.aspx" />
     <Content Include="Admin\AddPackageLogic.aspx" />
     <Content Include="Admin\AddStaff.aspx" />
@@ -97,13 +101,18 @@
     <Content Include="assets\footer5.jpg" />
     <Content Include="assets\footer6.jpg" />
     <Content Include="assets\hiking.jpg" />
+    <Content Include="assets\image1.jpg" />
     <Content Include="assets\museum.jpg" />
+    <Content Include="assets\museumslider.jpg" />
     <Content Include="assets\temple.jpg" />
+    <Content Include="assets\templeslider.jpg" />
     <Content Include="assets\tourist.jpeg" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
     <Content Include="booking.aspx" />
+    <Content Include="BookPackage.aspx" />
     <Content Include="contact.aspx" />
+    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="history.aspx" />
@@ -163,7 +172,6 @@
     <Content Include="RegisterLogic.aspx" />
     <Content Include="service.aspx" />
     <Content Include="team.aspx" />
-    <Content Include="travel-agency-html-template.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +342,13 @@
     </Compile>
     <Compile Include="Admin\ViewPackage.aspx.designer.cs">
       <DependentUpon>ViewPackage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BookPackage.aspx.cs">
+      <DependentUpon>BookPackage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BookPackage.aspx.designer.cs">
+      <DependentUpon>BookPackage.aspx</DependentUpon>
     </Compile>
     <Compile Include="contact.aspx.cs">
       <DependentUpon>contact.aspx</DependentUpon>

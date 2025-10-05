@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TourismWebApplication
+namespace YourNamespace
 {
 
 
-    public partial class index
+    public partial class BookPackage
     {
 
         /// <summary>
-        /// rptTopPackages control.
+        /// phBookingForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTopPackages;
+        protected global::System.Web.UI.WebControls.PlaceHolder phBookingForm;
     }
 }
