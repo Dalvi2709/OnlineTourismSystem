@@ -169,18 +169,9 @@
                                 <asp:Label ID="lblDescription" runat="server" />
                             </div>
                             <div class="mb-2">
-                                <i class="bi bi-house-door-fill text-primary me-1"></i><strong>Hotel:</strong>
-                                <asp:Label ID="lblHotel" runat="server" />
-                            </div>
-                            <div class="mb-2">
                                 <i class="bi bi-arrow-left-right text-secondary me-1"></i><strong>Source / Destination:</strong>
                                 <asp:Label ID="lblSourceDest" runat="server" />
                             </div>
-                            <div class="mb-3">
-                                <i class="bi bi-map-fill text-danger me-1"></i><strong>Map:</strong>
-                                <asp:HyperLink ID="lnkMap" runat="server" CssClass="text-decoration-none" Target="_blank" />
-                            </div>
-
                             <a href="package.aspx" class="btn btn-secondary mt-2"><i class="bi bi-arrow-left-circle me-1"></i>Back to Packages</a>
                         </div>
                     </div>
@@ -191,7 +182,7 @@
         <asp:Label ID="lblMessage" runat="server" CssClass="alert alert-danger" Visible="false"></asp:Label>
     </div>
 
-        <!-- Package Staff Details -->
+    <!-- Package Staff Details -->
     <div class="card shadow-lg p-4 mb-4">
         <h4 class="mb-3 text-primary">
             <i class="bi bi-people-fill me-2"></i>Assigned Staff

@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
         }
 
         .register-container {
@@ -33,10 +34,10 @@
             transition: all 0.3s ease-in-out;
         }
 
-            .btn-custom:hover {
-                background-color: #6c9e14;
-                transform: scale(1.02);
-            }
+        .btn-custom:hover {
+            background-color: #6c9e14;
+            transform: scale(1.02);
+        }
 
         .error {
             color: red;
@@ -49,8 +50,8 @@
     <div class="container">
         <div class="register-container">
             <h3 class="text-center mb-4" style="color: #86b817;">Create an Account</h3>
-            <form id="registerForm" method="post" action="RegisterLogic.aspx">
 
+            <form id="registerForm" method="post" action="RegisterLogic.aspx">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
                     <input type="text" name="name" id="name" class="form-control" required />
@@ -64,16 +65,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Phone Number</label>
-                    <input type="text" name="phone" id="phone" class="form-control" required maxlength="10" />
-                     <span class="error" id="phoneError">Password must be at least 6 characters</span>
-
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" name="phone" id="phone" class="form-control" maxlength="10" required />
+                    <span class="error" id="phoneError">Enter a valid 10-digit phone number</span>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control" required />
-                    <span class="error" id="passwordError">Password must be at least 6 characters</span>
                 </div>
 
                 <div class="mb-3">
@@ -92,39 +91,36 @@
 
             <div class="text-center mt-4">
                 <span class="me-2">Already have an account?</span>
-                <a href="Login.aspx"
-                    style="color: #86b817; font-weight: 600; text-decoration: none;">Login
-                </a>
+                <a href="Login.aspx" style="color: #86b817; font-weight: 600; text-decoration: none;">Login</a>
             </div>
         </div>
     </div>
 
-    <%
+    <% 
         string msg = Request.QueryString["msg"];
-        string type = Request.QueryString["type"]; // success / error
+        string type = Request.QueryString["type"];
         string alertClass = "";
 
         if (!string.IsNullOrEmpty(type))
         {
-            if (type == "success") { alertClass = "alert-success"; }
-            else if (type == "error") { alertClass = "alert-danger"; }
+            if (type == "success") alertClass = "alert-success";
+            else if (type == "error") alertClass = "alert-danger";
         }
     %>
 
-    <% if (!string.IsNullOrEmpty(msg))
-        { %>
-    <div class="alert <%= alertClass %> alert-dismissible fade show position-fixed bottom-0 end-0 m-3 z-25" role="alert" style="min-width: 250px;">
-        <%= msg %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <% if (!string.IsNullOrEmpty(msg)) { %>
+        <div class="alert <%= alertClass %> alert-dismissible fade show position-fixed bottom-0 end-0 m-3 z-25" 
+             role="alert" style="min-width: 250px;">
+            <%= msg %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     <% } %>
 
-
     <script>
-        //Validation for above input using Javascript. 
         document.getElementById("registerForm").addEventListener("submit", function (e) {
             let isValid = true;
 
+            // Full Name
             let name = document.getElementById("name").value.trim();
             if (name === "") {
                 document.getElementById("nameError").style.display = "block";
@@ -133,6 +129,7 @@
                 document.getElementById("nameError").style.display = "none";
             }
 
+            // Email
             let email = document.getElementById("email").value.trim();
             let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
             if (!email.match(emailPattern)) {
@@ -142,24 +139,17 @@
                 document.getElementById("emailError").style.display = "none";
             }
 
+            // Phone
             let phone = document.getElementById("phone").value.trim();
-            if(phone.length !== 10 || isNaN(phone)) {
+            if (phone.length !== 10 || isNaN(phone)) {
                 document.getElementById("phoneError").style.display = "block";
                 isValid = false;
             } else {
                 document.getElementById("phoneError").style.display = "none";
-            })
-
-
-            let password = document.getElementById("password").value;
-            if (password.length < 6) {
-                document.getElementById("passwordError").style.display = "block";
-                isValid = false;
-            } else {
-                document.getElementById("passwordError").style.display = "none";
             }
 
-
+            // Password match
+            let password = document.getElementById("password").value;
             let confirm = document.getElementById("confirm").value;
             if (password !== confirm) {
                 document.getElementById("confirmError").style.display = "block";
@@ -168,11 +158,9 @@
                 document.getElementById("confirmError").style.display = "none";
             }
 
-            if (!isValid) {
-                e.preventDefault();
-            }
+            // Stop form submission if invalid
+            if (!isValid) e.preventDefault();
         });
     </script>
 </body>
 </html>
-

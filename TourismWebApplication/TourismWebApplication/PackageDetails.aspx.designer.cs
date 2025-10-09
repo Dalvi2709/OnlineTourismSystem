@@ -114,15 +114,6 @@ namespace TourismWebApplication
         protected global::System.Web.UI.WebControls.Label lblDescription;
 
         /// <summary>
-        /// lblHotel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHotel;
-
-        /// <summary>
         /// lblSourceDest control.
         /// </summary>
         /// <remarks>
@@ -130,15 +121,6 @@ namespace TourismWebApplication
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblSourceDest;
-
-        /// <summary>
-        /// lnkMap control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink lnkMap;
 
         /// <summary>
         /// lblMessage control.

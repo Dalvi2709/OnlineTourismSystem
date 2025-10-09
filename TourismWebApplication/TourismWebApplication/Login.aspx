@@ -79,9 +79,10 @@
                     <button type="submit" class="btn btn-custom">Login</button>
                 </div>
 
-                <div class="d-grid">
-                    <a href="ForgotPassword.aspx" class="forgot-link">Forgot Password?</a>
-
+                <div class="d-flex justify-content-end mb-2">
+                    <a href="ForgotPassword.aspx" class="btn btn-link p-0 forgot-link" style="color: #86b817; font-weight: 500; text-decoration: underline;">
+                        <i class="fa fa-key me-1"></i>Forgot Password?
+    </a>
                 </div>
                 <div class="d-grid mt-2">
                     <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
