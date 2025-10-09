@@ -12,6 +12,7 @@
         Session["name"] = null;
         Session["Role"] = null;
         Session["phone"] = null;
+        Session["UserId"] = null;
 
         Response.Redirect("~/Login.aspx?msg=Logout%20Successful&type=success");
     %>

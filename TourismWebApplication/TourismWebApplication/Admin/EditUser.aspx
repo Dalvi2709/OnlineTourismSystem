@@ -43,7 +43,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="Email" class="form-control" value="<%= email %>" required />
+                        <input type="email" name="Email" class="form-control" value="<%= email %>" required readonly/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Phone</label>

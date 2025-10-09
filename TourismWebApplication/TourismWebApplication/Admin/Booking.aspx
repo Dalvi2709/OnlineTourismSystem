@@ -51,7 +51,7 @@
         <table class="table table-bordered table-hover mt-3">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>Sr No.</th>
                     <th>User</th>
                     <th>Package</th>
                     <th>Seats</th>
@@ -63,6 +63,7 @@
             </thead>
             <tbody>
                 <%
+                    int i = 1;
                     foreach (DataRow row in dt.Rows)
                     {
                         int id = Convert.ToInt32(row["BookingID"]);
@@ -74,7 +75,7 @@
                         string paymentStatus = row["PaymentStatus"].ToString();
                 %>
                 <tr>
-                    <td><%= id %></td>
+                    <td><%= i++ %></td>
                     <td><%= user %></td>
                     <td><%= package %></td>
                     <td><%= seats %></td>

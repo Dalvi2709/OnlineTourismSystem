@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="about.aspx" />
+    <Content Include="ForgotPassword.aspx" />
     <Content Include="img\about_us_page.jpg" />
     <Content Include="Admin\AddPackage.aspx" />
     <Content Include="Admin\AddPackageLogic.aspx" />
@@ -112,6 +113,7 @@
     <Content Include="booking.aspx" />
     <Content Include="BookPackage.aspx" />
     <Content Include="contact.aspx" />
+    <Content Include="ResetPassword.aspx" />
     <Content Include="travel-agency-html-template.jpg" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
@@ -357,6 +359,13 @@
     <Compile Include="contact.aspx.designer.cs">
       <DependentUpon>contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="history.aspx.cs">
       <DependentUpon>history.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -428,6 +437,13 @@
     </Compile>
     <Compile Include="RegisterLogic.aspx.designer.cs">
       <DependentUpon>RegisterLogic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="service.aspx.cs">
       <DependentUpon>service.aspx</DependentUpon>

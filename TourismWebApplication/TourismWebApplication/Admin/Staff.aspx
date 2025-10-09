@@ -45,19 +45,20 @@
                     <table id="staffTable" class="table table-modern table-striped table-bordered align-middle">
                         <thead>
                             <tr>
-                                <th><i class="bi bi-hash"></i>Staff ID</th>
-                                <th><i class="bi bi-person-fill"></i>Name</th>
+                                <th><i class="bi bi-hash mx-2"></i>Sr No.</th>
+                                <th><i class="bi bi-person-fill mx-2"></i>Name</th>
 
 
-                                <th><i class="bi bi-envelope-fill"></i>Email</th>
-                                <th><i class="bi bi-telephone-fill"></i>Phone</th>
-                                <th><i class="bi bi-toggle-on"></i>Status</th>
-                                <th><i class="bi bi-gear-fill"></i>Actions</th>
+                                <th><i class="bi bi-envelope-fill mx-2"></i>Email</th>
+                                <th><i class="bi bi-telephone-fill mx-2"></i>Phone</th>
+
+                                <th><i class="bi bi-gear-fill mx-2"></i>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
                                 string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
+                                int i = 1;
                                 using (SqlConnection conn = new SqlConnection(connStr))
                                 {
                                     conn.Open();
@@ -72,39 +73,48 @@
                                         bool isActive = Convert.ToBoolean(reader["IsActive"]);
                             %>
                             <tr>
-                                <td><%= staffId %></td>
+                                <td><%= i++ %></td>
                                 <td><%= name %></td>
                                 <td><%= email %></td>
                                 <td><%= phone %></td>
-                                <td>
+                                <!-- <td>
 
 
 
 
 
-                                    <% if (isActive) { %>
+                                    <% if (isActive)
+                                    { %>
                                     <span class="badge bg-success"><i class="bi bi-check-circle"></i>Active</span>
-                                    <% } else { %>
+                                    <% }
+                                    else
+                                    { %>
                                     <span class="badge bg-danger"><i class="bi bi-x-circle"></i>Inactive</span>
                                     <% } %>
-                                </td>
+                                </td>  -->
                                 <td>
-                                    <a href="EditStaff.aspx?StaffID=<%= staffId %>" class="btn btn-primary btn-sm action-btn">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                    <% if (isActive) { %>
+                                    <center>
+                                        <a href="EditStaff.aspx?StaffID=<%= staffId %>" class="btn btn-primary btn-sm action-btn">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                    </center>
+
+                                    <!--    <% if (isActive)
+                                        { %>
                                     <a href="ToggleStaff.aspx?StaffID=<%= staffId %>&action=deactivate" class="btn btn-danger btn-sm action-btn">
                                         <i class="bi bi-person-dash-fill"></i>
                                     </a>
-                                    <% } else { %>
+                                    <% }
+                                        else
+                                        { %>
                                     <a href="ToggleStaff.aspx?StaffID=<%= staffId %>&action=activate" class="btn btn-success btn-sm action-btn">
                                         <i class="bi bi-person-check-fill"></i>
                                     </a>
-                                    <% } %>
+                                    <% } %>  -->
                                 </td>
                             </tr>
                             <%
-                                    } 
+                                    }
                                     reader.Close();
                                 }
                             %>
@@ -145,7 +155,8 @@
             else if (type == "error") alertClass = "alert-danger";
         }
     %>
-    <% if (!string.IsNullOrEmpty(msg)) { %>
+    <% if (!string.IsNullOrEmpty(msg))
+        { %>
     <div class="alert <%= alertClass %> alert-dismissible fade show position-fixed bottom-0 end-0 m-3 z-25" role="alert" style="min-width: 250px;">
         <%= msg %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

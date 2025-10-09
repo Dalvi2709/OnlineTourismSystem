@@ -8,57 +8,115 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 <div class="container mt-4">
-
 <%
-    string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
-    string bookingIdStr = Request.QueryString["id"];
+string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
+string bookingIdStr = Request.QueryString["id"];
 
-    if (!string.IsNullOrEmpty(bookingIdStr))
+if (!string.IsNullOrEmpty(bookingIdStr) && int.TryParse(bookingIdStr, out int bookingId))
+{
+    string action = Request.QueryString["action"];
+
+    using (SqlConnection conn = new SqlConnection(connStr))
     {
-        int bookingId;
-        if (int.TryParse(bookingIdStr, out bookingId))
-        {
-            string action = Request.QueryString["action"];
-            if (!string.IsNullOrEmpty(action))
-            {
-                string newStatus = action.ToLower() == "confirm" ? "Confirmed" :
-                                   action.ToLower() == "cancel" ? "Cancelled" : "";
+        conn.Open();
 
-                if (!string.IsNullOrEmpty(newStatus))
+        if (!string.IsNullOrEmpty(action))
+        {
+            string newStatus = action.ToLower() == "confirm" ? "Confirmed" :
+                               action.ToLower() == "cancel" ? "Cancelled" : "";
+
+            if (!string.IsNullOrEmpty(newStatus))
+            {
+                using (SqlTransaction transaction = conn.BeginTransaction())
                 {
-                    using (SqlConnection conn = new SqlConnection(connStr))
+                    try
                     {
-                        string updateQuery = "UPDATE Bookings SET Status=@Status WHERE BookingID=@BookingID";
-                        SqlCommand cmd = new SqlCommand(updateQuery, conn);
-                        cmd.Parameters.AddWithValue("@Status", newStatus);
-                        cmd.Parameters.AddWithValue("@BookingID", bookingId);
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
+                        int seatBooked = 0;
+                        int packageId = 0;
+
+                        // Fetch booking info
+                        using (SqlCommand cmdGet = new SqlCommand(
+                            "SELECT PackageID, SeatBooked FROM Bookings WHERE BookingID=@BookingID",
+                            conn, transaction))
+                        {
+                            cmdGet.Parameters.AddWithValue("@BookingID", bookingId);
+                            using (SqlDataReader reader = cmdGet.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    seatBooked = Convert.ToInt32(reader["SeatBooked"]);
+                                    packageId = Convert.ToInt32(reader["PackageID"]);
+                                }
+                            }
+                        }
+
+                        if (packageId > 0 && seatBooked > 0)
+                        {
+                            if (newStatus == "Cancelled")
+                            {
+                                // Restore available slots
+                                using (SqlCommand cmdPackage = new SqlCommand(
+                                    "UPDATE Packages SET AvailableSlots = AvailableSlots + @SeatBooked WHERE PackageID=@PackageID",
+                                    conn, transaction))
+                                {
+                                    cmdPackage.Parameters.AddWithValue("@SeatBooked", seatBooked);
+                                    cmdPackage.Parameters.AddWithValue("@PackageID", packageId);
+                                    cmdPackage.ExecuteNonQuery();
+                                }
+                            }
+                            else if (newStatus == "Confirmed")
+                            {
+                                // Reduce available slots
+                                using (SqlCommand cmdPackage = new SqlCommand(
+                                    "UPDATE Packages SET AvailableSlots = AvailableSlots - @SeatBooked WHERE PackageID=@PackageID AND AvailableSlots >= @SeatBooked",
+                                    conn, transaction))
+                                {
+                                    cmdPackage.Parameters.AddWithValue("@SeatBooked", seatBooked);
+                                    cmdPackage.Parameters.AddWithValue("@PackageID", packageId);
+                                    int rowsAffected = cmdPackage.ExecuteNonQuery();
+
+                                    if (rowsAffected == 0)
+                                    {
+                                        throw new Exception("Not enough available slots to confirm booking.");
+                                    }
+                                }
+                            }
+                        }
+
+                        // Update booking status
+                        using (SqlCommand cmdUpdate = new SqlCommand(
+                            "UPDATE Bookings SET Status=@Status WHERE BookingID=@BookingID",
+                            conn, transaction))
+                        {
+                            cmdUpdate.Parameters.AddWithValue("@Status", newStatus);
+                            cmdUpdate.Parameters.AddWithValue("@BookingID", bookingId);
+                            cmdUpdate.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        Response.Write("<div class='alert alert-danger'>Error: " + ex.Message + "</div>");
                     }
                 }
             }
+        }
 
-
-
-
-
-
-            using (SqlConnection conn = new SqlConnection(connStr))
+        // ---------------- FETCH BOOKING DETAILS ----------------
+        using (SqlCommand cmd = new SqlCommand(@"
+            SELECT b.BookingID, b.BookingDate, b.TravelDate, b.Status, b.PaymentStatus,
+                   b.SeatBooked, u.Name AS UserName, u.Email AS UserEmail, u.Phone AS UserPhone,
+                   p.Title AS PackageTitle, p.Location, p.Price, p.StartDate, p.EndDate, p.HotelName, p.HotelAddress
+            FROM Bookings b
+            INNER JOIN Users u ON b.UserID = u.UserID
+            INNER JOIN Packages p ON b.PackageID = p.PackageID
+            WHERE b.BookingID=@BookingID", conn))
+        {
+            cmd.Parameters.AddWithValue("@BookingID", bookingId);
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                string query = @"
-                    SELECT b.BookingID, b.BookingDate, b.TravelDate, b.Status, b.PaymentStatus,
-                           u.Name AS UserName, u.Email AS UserEmail, u.Phone AS UserPhone,
-                           p.Title AS PackageTitle, p.Location, p.Price, p.StartDate, p.EndDate, p.HotelName, p.HotelAddress
-                    FROM Bookings b
-                    INNER JOIN Users u ON b.UserID = u.UserID
-                    INNER JOIN Packages p ON b.PackageID = p.PackageID
-                    WHERE b.BookingID=@BookingID";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@BookingID", bookingId);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-
                 if (reader.Read())
                 {
                     string userName = reader["UserName"].ToString();
@@ -77,29 +135,29 @@
                     string hotelAddress = reader["HotelAddress"].ToString();
 %>
 
+<!-- ---------------- BOOKING DETAILS CARD ---------------- -->
 <div class="card shadow-sm mb-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <h4 class="mb-0"><i class="fa-solid fa-ticket"></i> Booking Details (ID: <%= bookingId %>)</h4>
         <div>
-            <%%>
             <%
                 if (status.ToLower() == "pending")
                 {
             %>
-                <a href="BookingDetail.aspx?id=<%= bookingId %>&action=confirm" class="btn btn-success btn-sm me-1"><i class="fa-solid fa-check"></i> Confirm</a>
-                <a href="BookingDetail.aspx?id=<%= bookingId %>&action=cancel" class="btn btn-warning btn-sm"><i class="fa-solid fa-ban"></i> Cancel</a>
+            <a href="BookingDetail.aspx?id=<%= bookingId %>&action=confirm" class="btn btn-success btn-sm me-1"><i class="fa-solid fa-check"></i> Confirm</a>
+            <a href="BookingDetail.aspx?id=<%= bookingId %>&action=cancel" class="btn btn-warning btn-sm"><i class="fa-solid fa-ban"></i> Cancel</a>
             <%
                 }
                 else if (status.ToLower() == "confirmed")
                 {
             %>
-                <a href="BookingDetail.aspx?id=<%= bookingId %>&action=cancel" class="btn btn-warning btn-sm"><i class="fa-solid fa-ban"></i> Cancel</a>
+            <a href="BookingDetail.aspx?id=<%= bookingId %>&action=cancel" class="btn btn-warning btn-sm"><i class="fa-solid fa-ban"></i> Cancel</a>
             <%
                 }
                 else
                 {
             %>
-                <span class="badge bg-secondary">No actions available</span>
+            <span class="badge bg-secondary">No actions available</span>
             <%
                 }
             %>
@@ -117,7 +175,6 @@
                 <h5>Package Info</h5>
                 <p><i class="fa-solid fa-box"></i> <strong>Title:</strong> <%= packageTitle %></p>
                 <p><i class="fa-solid fa-map-location-dot"></i> <strong>Location:</strong> <%= location %></p>
-                <p><i class="fa-solid fa-hotel"></i> <strong>Hotel:</strong> <%= hotelName %>, <%= hotelAddress %></p>
                 <p><i class="fa-solid fa-money-bill-wave"></i> <strong>Price:</strong> ₹<%= price %></p>
             </div>
         </div>
@@ -128,33 +185,15 @@
             </div>
             <div class="col-md-6">
                 <p><i class="fa-solid fa-calendar-days"></i> <strong>Package Start/End:</strong> <%= startDate %> - <%= endDate %></p>
-                <p><i class="fa-solid fa-circle-info"></i> <strong>Status:</strong> 
-                    <% if (status.ToLower() == "pending")
-                        { %>
-                        <span class="badge bg-warning text-dark"><%= status %></span>
-                    <% }
-                        else if (status.ToLower() == "confirmed")
-                        { %>
-                        <span class="badge bg-success"><%= status %></span>
-                    <% }
-                        else
-                        { %>
-                        <span class="badge bg-danger"><%= status %></span>
-                    <% } %>
+                <p><i class="fa-solid fa-circle-info"></i> <strong>Status:</strong>
+                    <span class="badge <%= status.ToLower() == "pending" ? "bg-warning text-dark" : status.ToLower() == "confirmed" ? "bg-success" : "bg-danger" %>">
+                        <%= status %>
+                    </span>
                 </p>
-                <p><i class="fa-solid fa-credit-card"></i> <strong>Payment Status:</strong> 
-                    <% if (paymentStatus.ToLower() == "paid")
-                        { %>
-                        <span class="badge bg-success"><%= paymentStatus %></span>
-                    <% }
-                        else if (paymentStatus.ToLower() == "unpaid")
-                        { %>
-                        <span class="badge bg-warning text-dark"><%= paymentStatus %></span>
-                    <% }
-                        else
-                        { %>
-                        <span class="badge bg-danger"><%= paymentStatus %></span>
-                    <% } %>
+                <p><i class="fa-solid fa-credit-card"></i> <strong>Payment Status:</strong>
+                    <span class="badge <%= paymentStatus.ToLower() == "paid" ? "bg-success" : paymentStatus.ToLower() == "unpaid" ? "bg-warning text-dark" : "bg-danger" %>">
+                        <%= paymentStatus %>
+                    </span>
                 </p>
             </div>
         </div>
@@ -162,22 +201,18 @@
 </div>
 
 <%
+                }
+            }
         }
-        reader.Close();
-    }
 
-
-    using (SqlConnection conn = new SqlConnection(connStr))
-    {
-        string travelQuery = @"SELECT Name, Age, Gender, Relation
-                                       FROM Travelers
-                                       WHERE BookingID=@BookingID";
-        SqlCommand cmdTravel = new SqlCommand(travelQuery, conn);
-        cmdTravel.Parameters.AddWithValue("@BookingID", bookingId);
-        conn.Open();
-        SqlDataReader travelReader = cmdTravel.ExecuteReader();
+        // ---------------- TRAVELERS CARD ----------------
+        using (SqlCommand cmdTravel = new SqlCommand(
+            "SELECT Name, Age, Gender, Relation FROM Travelers WHERE BookingID=@BookingID", conn))
+        {
+            cmdTravel.Parameters.AddWithValue("@BookingID", bookingId);
+            using (SqlDataReader travelReader = cmdTravel.ExecuteReader())
+            {
 %>
-
 <div class="card shadow-sm mb-4">
     <div class="card-header bg-secondary text-white">
         <h5><i class="fa-solid fa-users"></i> Travelers</h5>
@@ -193,58 +228,44 @@
                 </tr>
             </thead>
             <tbody>
-<%
-    if (!travelReader.HasRows)
-    {
-%>
+                <%
+                if (!travelReader.HasRows)
+                {
+                %>
+                <tr><td colspan="4" class="text-center">No travelers added.</td></tr>
+                <%
+                }
+                else
+                {
+                    while (travelReader.Read())
+                    {
+                %>
                 <tr>
-                    <td colspan="4" class="text-center">No travelers added.</td>
+                    <td><%= travelReader["Name"].ToString() %></td>
+                    <td><%= travelReader["Age"] != DBNull.Value ? travelReader["Age"].ToString() : "-" %></td>
+                    <td><%= travelReader["Gender"].ToString() %></td>
+                    <td><%= travelReader["Relation"].ToString() %></td>
                 </tr>
-<%
-    }
-    else
-    {
-        while (travelReader.Read())
-        {
-            string tName = travelReader["Name"].ToString();
-            string tAge = travelReader["Age"] != DBNull.Value ? travelReader["Age"].ToString() : "-";
-            string tGender = travelReader["Gender"].ToString();
-            string tRelation = travelReader["Relation"].ToString();
-%>
-                <tr>
-                    <td><%= tName %></td>
-                    <td><%= tAge %></td>
-                    <td><%= tGender %></td>
-                    <td><%= tRelation %></td>
-                </tr>
-<%
-        }
-    }
-    travelReader.Close();
-%>
+                <%
+                    }
+                }
+                %>
             </tbody>
         </table>
     </div>
 </div>
-
 <%
+            }
         }
     }
-    else
-    {
+}
+else
+{
 %>
-    <div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i> Invalid Booking ID</div>
+<div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i> Invalid Booking ID</div>
 <%
-        }
-    }
-    else
-    {
+}
 %>
-    <div class="alert alert-danger"><i class="fa-solid fa-triangle-exclamation"></i> Booking ID not provided</div>
-<%
-        }
-    
-%>
-
 </div>
+
 </asp:Content>

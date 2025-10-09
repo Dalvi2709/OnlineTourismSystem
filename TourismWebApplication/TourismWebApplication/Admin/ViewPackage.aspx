@@ -72,17 +72,9 @@
                         <div class="mb-2"><i class="bi bi-people-fill text-info me-1"></i><strong>Audience:</strong> <%= audience %></div>
                         <div class="mb-2"><i class="bi bi-box2-heart text-danger me-1"></i><strong>Available Slots:</strong> <span class="badge <%= availableSlots > 0 ? "bg-success" : "bg-danger" %>"><%= availableSlots %></span></div>
                         <div class="mb-2"><i class="bi bi-card-text text-secondary me-1"></i><strong>Description:</strong> <%= string.IsNullOrEmpty(description) ? "No description available." : description %></div>
-                        <div class="mb-2"><i class="bi bi-house-door-fill text-primary me-1"></i><strong>Hotel:</strong> <%= hotelName %>, <%= hotelAddress %></div>
+                      
                         <div class="mb-2"><i class="bi bi-arrow-left-right text-secondary me-1"></i><strong>Source / Destination:</strong> <%= sourceDest %></div>
-                        <div class="mb-3">
-                            <i class="bi bi-map-fill text-danger me-1"></i><strong>Map:</strong>
-                            <% if (!string.IsNullOrEmpty(mapUrl))
-                                { %>
-                            <a href="<%= mapUrl %>" target="_blank" class="text-decoration-none">View on Google Maps</a>
-                            <% }
-                            else
-                            { %> N/A <% } %>
-                        </div>
+                      
                         <a href="Packages.aspx" class="btn btn-secondary mt-2"><i class="bi bi-arrow-left-circle me-1"></i>Back to Packages</a>
                     </div>
                 </div>

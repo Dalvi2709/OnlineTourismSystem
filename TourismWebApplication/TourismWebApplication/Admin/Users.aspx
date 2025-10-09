@@ -46,7 +46,7 @@
                     <table class="table table-modern table-striped table-bordered align-middle" id="usersTable">
                         <thead>
                             <tr>
-                                <th><i class="bi bi-hash"></i>User ID</th>
+                                <th><i class="bi bi-hash"></i>Sr No.</th>
                                 <th><i class="bi bi-person-fill"></i>Name</th>
                                 <th><i class="bi bi-envelope-fill"></i>Email</th>
                                 <th><i class="bi bi-telephone-fill"></i>Phone</th>
@@ -58,6 +58,7 @@
                         <tbody>
                             <%
                                 string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
+                                int i = 1;
                                 using (SqlConnection conn = new SqlConnection(connStr))
                                 {
                                     conn.Open();
@@ -73,7 +74,7 @@
                                         bool isActive = Convert.ToBoolean(reader["IsActive"]);
                             %>
                             <tr>
-                                <td><%= userId %></td>
+                                <td><%= i++ %></td>
                                 <td><%= name %></td>
                                 <td><%= email %></td>
                                 <td><%= phone %></td>

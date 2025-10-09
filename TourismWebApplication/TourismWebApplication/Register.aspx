@@ -66,6 +66,7 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Phone Number</label>
                     <input type="text" name="phone" id="phone" class="form-control" required maxlength="10" />
+                     <span class="error" id="phoneError">Password must be at least 6 characters</span>
 
                 </div>
 
@@ -140,6 +141,15 @@
             } else {
                 document.getElementById("emailError").style.display = "none";
             }
+
+            let phone = document.getElementById("phone").value.trim();
+            if(phone.length !== 10 || isNaN(phone)) {
+                document.getElementById("phoneError").style.display = "block";
+                isValid = false;
+            } else {
+                document.getElementById("phoneError").style.display = "none";
+            })
+
 
             let password = document.getElementById("password").value;
             if (password.length < 6) {

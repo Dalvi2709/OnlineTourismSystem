@@ -1,5 +1,4 @@
-﻿
-<%@ Page Language="C#" AutoEventWireup="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Configuration" %>
@@ -171,10 +170,13 @@
                     }
 
                     string updateSlotsQuery = "UPDATE Packages SET AvailableSlots = AvailableSlots - @SeatBooked WHERE PackageID=@PackageID";
-                    SqlCommand updateCmd = new SqlCommand(updateSlotsQuery, conn);
-                    updateCmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
-                    updateCmd.Parameters.AddWithValue("@PackageID", packageId);
-                    updateCmd.ExecuteNonQuery();
+                   
+                        SqlCommand updateCmd = new SqlCommand(updateSlotsQuery, conn);
+                        updateCmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
+                        updateCmd.Parameters.AddWithValue("@PackageID", packageId);
+                        updateCmd.ExecuteNonQuery();
+                    
+
         %>
         <div class="alert alert-success">
             ✅ Booking Successful for <strong><%= packageTitle %></strong>! You booked <%= seatBooked %> seat(s).

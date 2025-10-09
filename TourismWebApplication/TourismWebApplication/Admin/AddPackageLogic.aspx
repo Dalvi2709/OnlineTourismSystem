@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="System" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -10,6 +11,7 @@
 <body>
 <%
     string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
+
     using (SqlConnection con = new SqlConnection(connStr))
     {
         con.Open();
@@ -17,24 +19,23 @@
 
         try
         {
-            string title = Request.Form["title"];
-            string desc = Request.Form["description"];
-            string location = Request.Form["location"];
-            string audience = Request.Form["audience"];
-            string slots = Request.Form["availableslots"];
-            string price = Request.Form["price"];
-            string startdate = Request.Form["startdate"];
-            string enddate = Request.Form["enddate"];
-            string imageurl = Request.Form["imageurl"];
-            string hotelname = Request.Form["hotelname"];
-            string hoteladdress = Request.Form["hoteladdress"];
-            string hotelimageurl = Request.Form["hotelimageurl"];
-            string sourcedestination = Request.Form["sourcedestination"];
-            string mapurl = Request.Form["mapurl"];
+            // Retrieve form fields safely (avoid null reference errors)
+            string title = Request.Form["title"] ?? "";
+            string desc = Request.Form["description"] ?? "";
+            string location = Request.Form["location"] ?? "";
+            string audience = Request.Form["audience"] ?? "";
+            string slots = Request.Form["availableslots"] ?? "0";
+            string price = Request.Form["price"] ?? "0";
+            string startdate = Request.Form["startdate"] ?? DateTime.Today.ToString();
+            string enddate = Request.Form["enddate"] ?? DateTime.Today.ToString();
+            string imageurl = Request.Form["imageurl"] ?? "";
+            string sourcedestination = Request.Form["sourcedestination"] ?? "";
+            
 
+            // Type conversions with fallback defaults
             DateTime sDate, eDate;
-            if (!DateTime.TryParse(startdate, out sDate)) sDate = DateTime.Today;
-            if (!DateTime.TryParse(enddate, out eDate)) eDate = DateTime.Today;
+            DateTime.TryParse(startdate, out sDate);
+            DateTime.TryParse(enddate, out eDate);
 
             int availableSlotsInt;
             int.TryParse(slots, out availableSlotsInt);
@@ -42,29 +43,28 @@
             decimal priceDecimal;
             decimal.TryParse(price, out priceDecimal);
 
+            // SQL Insert for Package
             SqlCommand cmd = new SqlCommand(@"
                 INSERT INTO Packages 
                     (Title, Description, Location, Audience, AvailableSlots, Price, StartDate, EndDate, ImageUrl, 
-                     HotelName, HotelAddress, HotelImageUrl, SourceDestination, MapUrl)
+                      SourceDestination)
                 OUTPUT INSERTED.PackageID
                 VALUES 
                     (@Title, @Description, @Location, @Audience, @AvailableSlots, @Price, @StartDate, @EndDate, @ImageUrl, 
-                     @HotelName, @HotelAddress, @HotelImageUrl, @SourceDestination, @MapUrl)", con, trans);
+                     @SourceDestination)", con, trans);
 
+            // Add parameters safely
             cmd.Parameters.AddWithValue("@Title", title);
-            cmd.Parameters.AddWithValue("@Description", string.IsNullOrEmpty(desc) ? (object)DBNull.Value : desc);
-            cmd.Parameters.AddWithValue("@Location", location);
-            cmd.Parameters.AddWithValue("@Audience", string.IsNullOrEmpty(audience) ? (object)DBNull.Value : audience);
+            cmd.Parameters.AddWithValue("@Description", (object)desc ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@Location", (object)location ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@Audience", (object)audience ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@AvailableSlots", availableSlotsInt);
             cmd.Parameters.AddWithValue("@Price", priceDecimal);
             cmd.Parameters.AddWithValue("@StartDate", sDate);
             cmd.Parameters.AddWithValue("@EndDate", eDate);
-            cmd.Parameters.AddWithValue("@ImageUrl", string.IsNullOrEmpty(imageurl) ? (object)DBNull.Value : imageurl);
-            cmd.Parameters.AddWithValue("@HotelName", string.IsNullOrEmpty(hotelname) ? (object)DBNull.Value : hotelname);
-            cmd.Parameters.AddWithValue("@HotelAddress", string.IsNullOrEmpty(hoteladdress) ? (object)DBNull.Value : hoteladdress);
-            cmd.Parameters.AddWithValue("@HotelImageUrl", string.IsNullOrEmpty(hotelimageurl) ? (object)DBNull.Value : hotelimageurl);
-            cmd.Parameters.AddWithValue("@SourceDestination", string.IsNullOrEmpty(sourcedestination) ? (object)DBNull.Value : sourcedestination);
-            cmd.Parameters.AddWithValue("@MapUrl", string.IsNullOrEmpty(mapurl) ? (object)DBNull.Value : mapurl);
+            cmd.Parameters.AddWithValue("@ImageUrl", (object)imageurl ?? DBNull.Value);
+
+            cmd.Parameters.AddWithValue("@SourceDestination", (object)sourcedestination ?? DBNull.Value);
 
             long packageId = Convert.ToInt64(cmd.ExecuteScalar());
 
@@ -75,12 +75,10 @@
             {
                 foreach (string sid in selectedStaff)
                 {
-                    string role = Request.Form["role_" + sid];
+                    string role = Request.Form["role_" + sid] ?? "Other";
 
-                    if (string.IsNullOrEmpty(role) || Array.IndexOf(allowedRoles, role) == -1)
-                    {
+                    if (Array.IndexOf(allowedRoles, role) == -1)
                         role = "Other";
-                    }
 
                     SqlCommand staffCmd = new SqlCommand(@"
                         INSERT INTO PackageStaff (PackageID, StaffID, AssignedRole)
@@ -100,9 +98,18 @@
         }
         catch (Exception ex)
         {
+            try
+            {
+                trans.Rollback();
+            }
+            catch { /* ignore rollback errors */ }
 
-            trans.Rollback();
-            Response.Write("<script>alert('Error: " + ex.Message + "');</script>");
+            // Log the detailed error to a file for debugging (optional)
+            string logPath = Server.MapPath("~/App_Data/ErrorLog.txt");
+            System.IO.File.AppendAllText(logPath, 
+                $"[{DateTime.Now}] Error while adding package: {ex.Message}\n{ex.StackTrace}\n\n");
+
+            Response.Write("<script>alert('Something went wrong while adding the package. Please try again later.');</script>");
         }
     }
 %>

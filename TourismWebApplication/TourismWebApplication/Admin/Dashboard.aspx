@@ -48,6 +48,7 @@
 
     <div class="container-fluid mt-4">
         <h3 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>Admin Dashboard</h3>
+      
 
         <%
             string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
@@ -114,9 +115,8 @@
         <div class="mb-4">
             <a href="Users.aspx" class="btn btn-primary me-2 shadow-sm"><i class="bi bi-people-fill me-1"></i>Users</a>
             <a href="Packages.aspx" class="btn btn-success me-2 shadow-sm"><i class="bi bi-briefcase-fill me-1"></i>Packages</a>
-            <a href="Bookings.aspx" class="btn btn-warning me-2 shadow-sm"><i class="bi bi-calendar-check-fill me-1"></i>Bookings</a>
-            <a href="Payments.aspx" class="btn btn-danger me-2 shadow-sm"><i class="bi bi-credit-card-fill me-1"></i>Payments</a>
-            <a href="Travelers.aspx" class="btn btn-info shadow-sm"><i class="bi bi-person-badge-fill me-1"></i>Travelers</a>
+            <a href="Booking.aspx" class="btn btn-warning me-2 shadow-sm"><i class="bi bi-calendar-check-fill me-1"></i>Bookings</a>
+            
         </div>
 
         <div class="row mb-4 g-3">
@@ -141,7 +141,7 @@
                     <h3><%= bookingsCount %></h3>
                 </div>
             </div>
-            <div class="col-md-2">
+           <!-- <div class="col-md-2">
                 <div class="card card-gradient text-center py-3" style="background: linear-gradient(135deg,#1e3c72,#2a5298)">
                     <i class="bi bi-credit-card-fill icon-large"></i>
                     <h6>Payments</h6>
@@ -154,7 +154,7 @@
                     <h6>Travelers</h6>
                     <h3><%= travelersCount %></h3>
                 </div>
-            </div>
+            </div>  -->
         </div>
 
         <div class="card shadow-sm">
@@ -164,14 +164,14 @@
                     <table class="table table-modern table-striped table-bordered align-middle">
                         <thead>
                             <tr>
-                                <th><i class="bi bi-hash"></i>Booking ID</th>
+                                <th><i class="bi bi-hash"></i>Sr No.</th>
                                 <th><i class="bi bi-person-fill"></i>User</th>
                                 <th><i class="bi bi-briefcase-fill"></i>Package</th>
                                 <th><i class="bi bi-calendar-event"></i>Travel Date</th>
                                 <th><i class="bi bi-calendar-range"></i>Duration</th>
                                 <th><i class="bi bi-geo-alt-fill"></i>Source/Dest</th>
                                 <th><i class="bi bi-info-circle-fill"></i>Status</th>
-                                <th><i class="bi bi-people-fill"></i>Travelers</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -205,6 +205,7 @@
                                         bookingsList.Add(booking);
                                     }
                                     reader.Close();
+                                    int i = 1;
 
                                     // Step 2: For each booking, fetch travelers
                                     foreach (var booking in bookingsList)
@@ -222,9 +223,11 @@
                                             travelers.Add(readerTrav["Name"] + " (" + readerTrav["Relation"] + ")");
                                         }
                                         readerTrav.Close();
+                                        
+                                        
                             %>
                             <tr>
-                                <td><%= bookingId %></td>
+                                <td><%= i++ %></td>
                                 <td><%= booking["UserName"] %></td>
                                 <td><%= booking["PackageTitle"] %></td>
                                 <td><%= ((DateTime)booking["TravelDate"]).ToString("yyyy-MM-dd") %></td>
@@ -245,15 +248,17 @@
                                     <span class="badge bg-danger badge-status"><i class="bi bi-x-circle"></i><%= status %></span>
                                     <% } %>
                                 </td>
-                                <td>
+                               <!-- <td>
                                     <% foreach (var t in travelers)
                                     { %>
                                     <i class="bi bi-person-lines-fill"></i><%= t %><br />
-                                    <% } %>
-                                </td>
+                                    <%  } %>
+                                </td> -->
                             </tr>
+                           
                             <%
                                     } // end foreach
+                                   
                                 } // end using
                             %>
                         </tbody>
