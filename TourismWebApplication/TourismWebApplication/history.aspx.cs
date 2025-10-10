@@ -21,7 +21,7 @@ namespace TourismWebApplication.Customer
                 {
                     pnlNotLoggedIn.Visible = true;
                     pnlLoggedIn.Visible = false;
-                    LoadPopularPackages(); // Optional dynamic content for guests
+                    LoadPopularPackages(); // Optional for guest view
                 }
             }
         }
@@ -35,46 +35,62 @@ namespace TourismWebApplication.Customer
                 string query = @"
                     SELECT 
                         b.BookingID, 
-                        p.Title, 
+                        p.Title AS PackageTitle,
                         p.Location, 
                         b.BookingDate, 
                         b.TravelDate, 
                         b.Status, 
                         b.PaymentStatus, 
-                        p.ImageUrl AS PackageImage
+                        ISNULL(p.ImageUrl, '~/images/default-package.jpg') AS PackageImage
                     FROM Bookings b
                     INNER JOIN Packages p ON b.PackageID = p.PackageID
                     INNER JOIN Users u ON b.UserID = u.UserID
                     WHERE u.Email = @Email
                     ORDER BY b.BookingDate DESC";
 
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@Email", userEmail);
-
-                DataTable dt = new DataTable();
-                try
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
+                    cmd.Parameters.AddWithValue("@Email", userEmail);
 
-                    rptHistory.DataSource = dt;
-                    rptHistory.DataBind();
+                    try
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
 
-                    lblMessage.Text = dt.Rows.Count == 0
-                        ? "No bookings found in your history."
-                        : "Showing your personal booking history.";
-                }
-                catch (Exception ex)
-                {
-                    lblMessage.Text = "Error loading history: " + ex.Message;
+                        rptHistory.DataSource = dt;
+                        rptHistory.DataBind();
+
+                        lblMessage.Text = dt.Rows.Count == 0
+                            ? "You have no previous bookings."
+                            : "Here’s your booking history:";
+                    }
+                    catch (Exception ex)
+                    {
+                        lblMessage.Text = "Error loading booking history. Please try again later.";
+                        // Optional: log error (e.g., using Elmah or custom logger)
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
+                    }
                 }
             }
         }
 
         private void LoadPopularPackages()
         {
-            // Optional: populate images for guests dynamically from Packages table
-            // For simplicity, we are using static images in pnlNotLoggedIn
+            // Optional: Load top 3 or 5 most booked packages for guest view
+            // Example:
+            /*
+            string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connStr))
+            {
+                string query = "SELECT TOP 3 Title, ImageUrl FROM Packages ORDER BY NEWID()"; // random 3
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                rptPopular.DataSource = dt;
+                rptPopular.DataBind();
+            }
+            */
         }
     }
 }

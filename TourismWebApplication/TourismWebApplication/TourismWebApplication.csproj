@@ -113,6 +113,8 @@
     <Content Include="booking.aspx" />
     <Content Include="BookPackage.aspx" />
     <Content Include="contact.aspx" />
+    <Content Include="Packages.aspx" />
+    <Content Include="Payment.aspx" />
     <Content Include="ResetPassword.aspx" />
     <Content Include="travel-agency-html-template.jpg" />
     <Content Include="css\bootstrap.min.css" />
@@ -142,29 +144,6 @@
     <Content Include="img\testimonial-3.jpg" />
     <Content Include="img\testimonial-4.jpg" />
     <Content Include="js\main.js" />
-    <Content Include="lib\animate\animate.css" />
-    <Content Include="lib\animate\animate.min.css" />
-    <Content Include="lib\easing\easing.js" />
-    <Content Include="lib\easing\easing.min.js" />
-    <Content Include="lib\owlcarousel\assets\ajax-loader.gif" />
-    <Content Include="lib\owlcarousel\assets\owl.carousel.css" />
-    <Content Include="lib\owlcarousel\assets\owl.carousel.min.css" />
-    <Content Include="lib\owlcarousel\assets\owl.theme.default.css" />
-    <Content Include="lib\owlcarousel\assets\owl.theme.default.min.css" />
-    <Content Include="lib\owlcarousel\assets\owl.theme.green.css" />
-    <Content Include="lib\owlcarousel\assets\owl.theme.green.min.css" />
-    <Content Include="lib\owlcarousel\assets\owl.video.play.png" />
-    <Content Include="lib\owlcarousel\owl.carousel.js" />
-    <Content Include="lib\owlcarousel\owl.carousel.min.js" />
-    <Content Include="lib\tempusdominus\css\tempusdominus-bootstrap-4.css" />
-    <Content Include="lib\tempusdominus\css\tempusdominus-bootstrap-4.min.css" />
-    <Content Include="lib\tempusdominus\js\moment-timezone.min.js" />
-    <Content Include="lib\tempusdominus\js\moment.min.js" />
-    <Content Include="lib\tempusdominus\js\tempusdominus-bootstrap-4.js" />
-    <Content Include="lib\tempusdominus\js\tempusdominus-bootstrap-4.min.js" />
-    <Content Include="lib\waypoints\waypoints.min.js" />
-    <Content Include="lib\wow\wow.js" />
-    <Content Include="lib\wow\wow.min.js" />
     <Content Include="LICENSE.txt" />
     <Content Include="Login.aspx" />
     <Content Include="LoginLogic.aspx" />
@@ -380,6 +359,20 @@
     <Compile Include="PackageDetails.aspx.designer.cs">
       <DependentUpon>PackageDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Packages.aspx.cs">
+      <DependentUpon>Packages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Packages.aspx.designer.cs">
+      <DependentUpon>Packages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.aspx.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payment.aspx.designer.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -415,7 +408,6 @@
     <Compile Include="LoginLogic.aspx.designer.cs">
       <DependentUpon>LoginLogic.aspx</DependentUpon>
     </Compile>
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" />
     <Compile Include="package.aspx.cs">
       <DependentUpon>package.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -454,12 +446,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\owlcarousel\LICENSE" />
-    <Content Include="lib\waypoints\links.php" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\TourismWebApplication.csproj.AssemblyReference.cache" />
     <Content Include="Admin\Admin.Master" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\dotnetteam-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\dotnetteam-001-site1 - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -467,9 +457,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="obj\Debug\TempPE\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

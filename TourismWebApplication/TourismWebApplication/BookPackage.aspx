@@ -1,13 +1,14 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" %>
-
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Configuration" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Book Package</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
     <script>
         function showTravelerFields() {
             var seats = parseInt(document.getElementById("SeatBooked").value);
@@ -56,9 +57,9 @@
             }
 
             for (var i = 2; i <= seats; i++) {
-                var tName = document.getElementById("TravelerName_" + i).value.trim();
-                var tAge = document.getElementById("TravelerAge_" + i).value.trim();
-                var tGender = document.getElementById("TravelerGender_" + i).value;
+                var tName = document.getElementById("TravelerName_" + i)?.value.trim();
+                var tAge = document.getElementById("TravelerAge_" + i)?.value.trim();
+                var tGender = document.getElementById("TravelerGender_" + i)?.value;
 
                 if (tName === "" || tAge === "" || tGender === "") {
                     alert("Please fill all traveler details for traveler " + (i - 1));
@@ -69,30 +70,9 @@
         }
     </script>
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-
     <div class="container py-5">
-
         <h2 class="text-center text-primary mb-4">Book Your Package</h2>
 
         <%
@@ -103,17 +83,13 @@
             if (userId == null)
             {
         %>
-        <!-- Login Required Card -->
-        <div class="card border-warning mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-warning text-dark">
-                ⚠️ Login Required
-            </div>
+        <!-- Login Required -->
+        <div class="card border-warning text-center mx-auto shadow-sm" style="max-width: 500px;">
+            <div class="card-header bg-warning text-dark">⚠️ Login Required</div>
             <div class="card-body">
-                <p class="card-text">You need to login to book a package.</p>
+                <p>You need to login to book a package.</p>
                 <a href="Login.aspx" class="btn btn-warning">Login Now</a>
-            </div>
-            <div class="d-grid mt-2">
-                <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
+                <a href="index.aspx" class="btn btn-outline-secondary mt-2">Back to Home</a>
             </div>
         </div>
         <%
@@ -127,7 +103,6 @@
                 using (SqlConnection conn = new SqlConnection(connStr))
                 {
                     conn.Open();
-
                     string getPackageQuery = "SELECT StartDate, AvailableSlots, Title FROM Packages WHERE PackageID=@PackageID";
                     SqlCommand getDateCmd = new SqlCommand(getPackageQuery, conn);
                     getDateCmd.Parameters.AddWithValue("@PackageID", packageId);
@@ -143,116 +118,100 @@
                         else
                         {
         %>
-        <!-- Package Not Found Card -->
-        <div class="card border-danger mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-danger text-white">
-                ⚠️ Package Not Found
-            </div>
+        <!-- Package Not Found -->
+        <div class="card border-danger text-center mx-auto shadow-sm" style="max-width: 500px;">
+            <div class="card-header bg-danger text-white">❌ Package Not Found</div>
             <div class="card-body">
-                <p class="card-text">The package you are trying to book does not exist.</p>
+                <p>The package you are trying to book does not exist.</p>
                 <a href="index.aspx" class="btn btn-danger">Back to Home</a>
             </div>
         </div>
         <%
-                    return;
-                }
-            }
+                            return;
+                        }
+                    }
 
-            if (Request.HttpMethod == "POST")
-            {
-                int seatBooked = int.Parse(Request.Form["SeatBooked"]);
+                    // Handle form submit
+                    if (Request.HttpMethod == "POST")
+                    {
+                        int seatBooked = int.Parse(Request.Form["SeatBooked"]);
 
-                if (seatBooked < 1 || seatBooked > availableSlots)
-                {
+                        if (seatBooked < 1 || seatBooked > availableSlots)
+                        {
         %>
-        <!-- Seat Limit Card -->
-        <div class="card border-danger mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-danger text-white">
-                ❌ Booking Error
-            </div>
+        <!-- Seat Limit Error -->
+        <div class="card border-danger text-center mx-auto shadow-sm" style="max-width: 500px;">
+            <div class="card-header bg-danger text-white">❌ Booking Error</div>
             <div class="card-body">
-                <p class="card-text">You can book between 1 and <strong><%= availableSlots %></strong> seat(s).</p>
+                <p>You can book between 1 and <strong><%= availableSlots %></strong> seat(s).</p>
                 <a href="index.aspx" class="btn btn-danger">Back to Home</a>
             </div>
         </div>
         <%
-            }
-            else
-            {
-                try
-                {
-                    string insertQuery = @"INSERT INTO Bookings(UserID, PackageID, TravelDate, SeatBooked, Status, PaymentStatus)
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string insertQuery = @"INSERT INTO Bookings(UserID, PackageID, TravelDate, SeatBooked, Status, PaymentStatus)
                                                        VALUES(@UserID, @PackageID, @TravelDate, @SeatBooked, 'Pending', 'Unpaid');
                                                        SELECT SCOPE_IDENTITY();";
-                    SqlCommand cmd = new SqlCommand(insertQuery, conn);
-                    cmd.Parameters.AddWithValue("@UserID", userId);
-                    cmd.Parameters.AddWithValue("@PackageID", packageId);
-                    cmd.Parameters.AddWithValue("@TravelDate", travelDate);
-                    cmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
+                                SqlCommand cmd = new SqlCommand(insertQuery, conn);
+                                cmd.Parameters.AddWithValue("@UserID", userId);
+                                cmd.Parameters.AddWithValue("@PackageID", packageId);
+                                cmd.Parameters.AddWithValue("@TravelDate", travelDate);
+                                cmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
 
-                    long bookingId = Convert.ToInt64(cmd.ExecuteScalar());
+                                long bookingId = Convert.ToInt64(cmd.ExecuteScalar());
 
-                    if (bookingId > 0 && seatBooked > 1)
-                    {
-                        for (int i = 2; i <= seatBooked; i++)
-                        {
-                            string tName = Request.Form["TravelerName_" + i];
-                            string tAge = Request.Form["TravelerAge_" + i];
-                            string tGender = Request.Form["TravelerGender_" + i];
-                            string tRelation = Request.Form["TravelerRelation_" + i];
+                                // Add traveler details
+                                if (bookingId > 0 && seatBooked > 1)
+                                {
+                                    for (int i = 2; i <= seatBooked; i++)
+                                    {
+                                        string tName = Request.Form["TravelerName_" + i];
+                                        string tAge = Request.Form["TravelerAge_" + i];
+                                        string tGender = Request.Form["TravelerGender_" + i];
+                                        string tRelation = Request.Form["TravelerRelation_" + i];
 
-                            string travelerQuery = @"INSERT INTO Travelers(BookingID, Name, Age, Gender, Relation)
+                                        string travelerQuery = @"INSERT INTO Travelers(BookingID, Name, Age, Gender, Relation)
                                                                  VALUES(@BookingID, @Name, @Age, @Gender, @Relation)";
-                            SqlCommand travelerCmd = new SqlCommand(travelerQuery, conn);
-                            travelerCmd.Parameters.AddWithValue("@BookingID", bookingId);
-                            travelerCmd.Parameters.AddWithValue("@Name", tName);
-                            travelerCmd.Parameters.AddWithValue("@Age", int.Parse(tAge));
-                            travelerCmd.Parameters.AddWithValue("@Gender", tGender);
-                            travelerCmd.Parameters.AddWithValue("@Relation", string.IsNullOrEmpty(tRelation) ? DBNull.Value : (object)tRelation);
+                                        SqlCommand travelerCmd = new SqlCommand(travelerQuery, conn);
+                                        travelerCmd.Parameters.AddWithValue("@BookingID", bookingId);
+                                        travelerCmd.Parameters.AddWithValue("@Name", tName);
+                                        travelerCmd.Parameters.AddWithValue("@Age", int.Parse(tAge));
+                                        travelerCmd.Parameters.AddWithValue("@Gender", tGender);
+                                        travelerCmd.Parameters.AddWithValue("@Relation", string.IsNullOrEmpty(tRelation) ? DBNull.Value : (object)tRelation);
+                                        travelerCmd.ExecuteNonQuery();
+                                    }
+                                }
 
-                            travelerCmd.ExecuteNonQuery();
-                        }
-                    }
+                                // Update available slots
+                                string updateSlotsQuery = "UPDATE Packages SET AvailableSlots = AvailableSlots - @SeatBooked WHERE PackageID=@PackageID";
+                                SqlCommand updateCmd = new SqlCommand(updateSlotsQuery, conn);
+                                updateCmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
+                                updateCmd.Parameters.AddWithValue("@PackageID", packageId);
+                                updateCmd.ExecuteNonQuery();
 
-                    string updateSlotsQuery = "UPDATE Packages SET AvailableSlots = AvailableSlots - @SeatBooked WHERE PackageID=@PackageID";
-                    SqlCommand updateCmd = new SqlCommand(updateSlotsQuery, conn);
-                    updateCmd.Parameters.AddWithValue("@SeatBooked", seatBooked);
-                    updateCmd.Parameters.AddWithValue("@PackageID", packageId);
-                    updateCmd.ExecuteNonQuery();
+                                // ✅ Redirect to Payment page
+                                Response.Redirect("Payment.aspx?BookingId=" + bookingId);
+                            }
+                            catch (SqlException ex)
+                            {
         %>
-        <!-- Success Card -->
-        <div class="card border-success mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-success text-white">
-                ✅ Booking Successful
-            </div>
+        <!-- SQL Error -->
+        <div class="card border-danger text-center mx-auto shadow-sm" style="max-width: 500px;">
+            <div class="card-header bg-danger text-white">❌ Booking Failed</div>
             <div class="card-body">
-                <p class="card-text">
-                    You have successfully booked <strong><%= seatBooked %></strong> seat(s) for <strong><%= packageTitle %></strong>.
-                </p>
-                <a href="history.aspx" class="btn btn-success me-2">View My Bookings</a>
-                <a href="index.aspx" class="btn btn-outline-success">Back to Home</a>
-            </div>
-        </div>
-        <%
-            }
-            catch (SqlException ex)
-            {
-        %>
-        <!-- SQL Error Card -->
-        <div class="card border-danger mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-danger text-white">
-                ❌ Booking Failed
-            </div>
-            <div class="card-body">
-                <p class="card-text">Error: <%= ex.Message %></p>
+                <p>Error: <%= ex.Message %></p>
                 <a href="index.aspx" class="btn btn-danger">Back to Home</a>
             </div>
         </div>
         <%
+                            }
                         }
                     }
                 }
-            }
         %>
 
         <!-- Booking Form -->
@@ -274,9 +233,7 @@
             <div id="travelerContainer"></div>
 
             <button type="submit" class="btn btn-primary w-100">Book Now</button>
-            <div class="d-grid mt-2">
-                <a href="index.aspx" class="btn btn-outline-secondary">Back to Home</a>
-            </div>
+            <a href="index.aspx" class="btn btn-outline-secondary w-100 mt-2">Back to Home</a>
         </form>
 
         <script>
@@ -289,12 +246,10 @@
             {
         %>
         <!-- Invalid Package ID -->
-        <div class="card border-warning mb-3 shadow-sm text-center mx-auto" style="max-width: 500px;">
-            <div class="card-header bg-warning text-dark">
-                ⚠️ Invalid Package ID
-            </div>
+        <div class="card border-warning text-center mx-auto shadow-sm" style="max-width: 500px;">
+            <div class="card-header bg-warning text-dark">⚠️ Invalid Package ID</div>
             <div class="card-body">
-                <p class="card-text">The package ID provided is invalid.</p>
+                <p>The package ID provided is invalid.</p>
                 <a href="index.aspx" class="btn btn-warning">Back to Home</a>
             </div>
         </div>
@@ -302,6 +257,5 @@
             }
         %>
     </div>
-
 </body>
 </html>

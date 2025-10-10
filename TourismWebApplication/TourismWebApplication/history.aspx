@@ -273,18 +273,27 @@
                                     <div class="card card-history h-100">
                                         <img src='<%# Eval("PackageImage") %>' class="card-img-top" alt="Package Image" style="height: 200px; object-fit: cover;" />
                                         <div class="card-body">
-                                            <h5 class="card-title"><%# Eval("Title") %></h5>
+                                            <h5 class="card-title"><%# Eval("PackageTitle") %></h5>
                                             <p class="card-text"><strong>Location:</strong> <%# Eval("Location") %></p>
                                             <p class="card-text"><strong>Booking Date:</strong> <%# Eval("BookingDate", "{0:yyyy-MM-dd}") %></p>
                                             <p class="card-text"><strong>Travel Date:</strong> <%# Eval("TravelDate", "{0:yyyy-MM-dd}") %></p>
                                         </div>
-                                        <div class="card-footer d-flex justify-content-between">
+
+                                        <div class="card-footer d-flex justify-content-between align-items-center">
                                             <span class='badge badge-status badge-<%# Eval("Status") %>'><%# Eval("Status") %></span>
                                             <span class='badge badge-status badge-<%# Eval("PaymentStatus") %>'><%# Eval("PaymentStatus") %></span>
+                                        </div>
+
+                                        <!-- ✅ Conditional Pay Now Button -->
+                                        <div class="card-footer text-center">
+                                            <%# (Eval("Status").ToString() == "Pending" && Eval("PaymentStatus").ToString() == "Unpaid") 
+                        ? "<a href='Payment.aspx?BookingID=" + Eval("BookingID") + "' class=\"btn btn-success btn-sm\">Pay Now</a>" 
+                        : "" %>
                                         </div>
                                     </div>
                                 </div>
                             </ItemTemplate>
+
                         </asp:Repeater>
                     </div>
                 </asp:Panel>

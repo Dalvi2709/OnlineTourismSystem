@@ -212,16 +212,16 @@
                     <!-- JS Script -->
                     <script>
                         document.getElementById("contactForm").addEventListener("submit", function (event) {
-                            event.preventDefault(); // stop normal form submit
+                            event.preventDefault(); 
 
-                            fetch("https://formsubmit.co/ikagailife86@gmail.com", {
+                            fetch("https://formsubmit.co/aadityakolhapure28@gmail.com", {
                                 method: "POST",
                                 body: new FormData(this)
                             })
                                 .then(response => {
                                     if (response.ok) {
                                         alert("✅ Sent Successfully!");
-                                        this.reset(); // clear form fields
+                                        this.reset(); 
                                     } else {
                                         alert("❌ Something went wrong!");
                                     }

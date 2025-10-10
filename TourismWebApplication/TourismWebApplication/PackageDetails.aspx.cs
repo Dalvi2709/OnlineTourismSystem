@@ -76,24 +76,11 @@ namespace TourismWebApplication
                     string imgUrl = reader["ImageUrl"].ToString();
                     imgPackage.ImageUrl = string.IsNullOrEmpty(imgUrl) ? "/assets/no-image.jpg" : imgUrl;
 
-                    // Hotel details
-                    lblHotel.Text = reader["HotelName"].ToString() + ", " + reader["HotelAddress"].ToString();
-
+                    
                     // Source/Destination
                     lblSourceDest.Text = reader["SourceDestination"].ToString();
 
-                    // Map link
-                    string mapUrl = reader["MapUrl"].ToString();
-                    if (!string.IsNullOrEmpty(mapUrl))
-                    {
-                        lnkMap.Text = "View on Google Maps";
-                        lnkMap.NavigateUrl = mapUrl;
-                    }
-                    else
-                    {
-                        lnkMap.Text = "N/A";
-                        lnkMap.NavigateUrl = "";
-                    }
+                    
 
                     // Status badge
                     lblStatus.Attributes["class"] = endDate < DateTime.Now ? "badge bg-danger mb-3" : "badge bg-success mb-3";
